@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import { addNavigationHelpers } from 'react-navigation'
 import { connect } from 'react-redux'
+
 import AppNavigation from './AppNavigation'
 
 // here is our redux-aware smart component
@@ -12,11 +13,7 @@ function ReduxNavigation (props) {
         state: nav
     })
 
-    return (
-        <AppNavigation
-            navigation={navigation}
-        />
-    )
+    return <AppNavigation navigation={navigation} />
 }
 
 ReduxNavigation.propTypes = {

@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types';
-import { View, Text } from 'react-native'
+
+import {
+    Button,
+    Text } from 'native-base';
+
 import styles from './Styles/TaskTimerStyle'
-import Button from 'react-native-smart-button'
 
 import EntypoIcon from 'react-native-vector-icons/Entypo'
 
@@ -64,15 +67,15 @@ export default class TaskTimer extends Component {
         clearInterval(this.taskTimer)
     }
 
-  render () {
-    if (!this.state.running) {
-        return (
-            <View>
+    render () {
+        if (!this.state.running) {
+            return (
                 <Button
+                    block
+                    large
                     onPress={() => this._onPressStart()}
                     style={styles.buttonStyleStart}
-                    textStyle={styles.buttonTextStyle}
-                >
+                    >
                     <EntypoIcon
                         name="controller-play"
                         color={Colors.btnText}
@@ -80,20 +83,17 @@ export default class TaskTimer extends Component {
                         style={styles.buttonIconStyle}
                     />
                 </Button>
-            </View>
-        )
-    } else {
-        return (
-            <View>
+            )
+        } else {
+            return (
                 <Button
+                    block
+                    large
                     onPress={() => this._onPressStop()}
                     style={styles.buttonStyleStop}
-                    textStyle={styles.buttonStopTextStyle}
-                >
-                    {this.state.txtTime}
+                    >
+                    <Text style={styles.buttonStopTextStyle}>{this.state.txtTime}</Text>
                 </Button>
-
-            </View>
             )
         }
     }

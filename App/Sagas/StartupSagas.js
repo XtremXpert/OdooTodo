@@ -10,9 +10,14 @@ export const selectLoggedInStatus = (state) => isLoggedIn(state.login)
 
 // process STARTUP actions
 export function * startup (action) {
-  yield put(AppStateActions.setRehydrationComplete())
-  const isLoggedIn = yield select(selectLoggedInStatus)
-  if (isLoggedIn) {
-    yield put(LoggedInActions.autoLogin())
-  }
+    yield put(AppStateActions.setRehydrationComplete())
+    const isLoggedIn = yield select(selectLoggedInStatus)
+
+    console.tron.log(isLoggedIn)
+
+    if (isLoggedIn) {
+        yield put(LoggedInActions.autoLogin())
+    } else {
+        console.tron.log('Not Logged')        
+    }
 }

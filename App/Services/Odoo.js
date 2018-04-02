@@ -1,7 +1,7 @@
 // a library simplify odoo api calls
 import apisauce from 'apisauce'
-
 // our "constructor"
+//const create = ( baseURL = 'http://192.168.234.124:8069/' ) => {
 const create = ( baseURL = 'http://demo-projet.xtremxpert.com/' ) => {
 
     const odoo = apisauce.create({
@@ -36,8 +36,7 @@ const create = ( baseURL = 'http://demo-projet.xtremxpert.com/' ) => {
     const search = (model, paramsIn) => {
         const url = 'web/dataset/call_kw'
 
-        const params = {
-            kwargs: {
+        const params = {            kwargs: {
                 context: this.context
             },
             model,

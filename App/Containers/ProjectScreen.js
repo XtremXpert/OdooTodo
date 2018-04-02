@@ -1,10 +1,18 @@
 import React, { Component } from 'react'
 
 import {
-    View,
-    Text } from 'react-native'
+    Body,
+    Button,
+    Container,
+    Content,
+    Header,
+    Left,
+    List,
+    ListItem,
+    Right,
+    Text,
+    Title } from 'native-base';
 
-import Button from 'react-native-smart-button'
 import TaskList from '../Components/TaskList'
 
 import { connect } from 'react-redux'
@@ -19,6 +27,10 @@ import styles from './Styles/ProjectScreenStyle'
 import { Colors } from '../Themes/'
 
 import EntypoIcon from 'react-native-vector-icons/Entypo'
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+
+import I18n from '../I18n';
+
 
 class ProjectScreen extends Component {
     _onPressBack = () => {
@@ -35,33 +47,43 @@ class ProjectScreen extends Component {
     render () {
         const project = this.props.project
         const projectTasks = this.props.tasks
+        const { navigate } = this.props.navigation
+        
         return (
-            <View style={styles.containerPage}>
-                <Text style={styles.headerText}>{project.name}</Text>
-                <View style={styles.container}>
-                    <TaskList
-                        userTasks={projectTasks}
-                        onTaskSelect={this._onPressTask}
-                    />
-                </View>
-                <View style={{
-                    flexDirection: 'row',
-                    marginBottom: 10
-                    }}>
-                    <Button
-                        onPress={() => this._onPressBack()}
-                        style={styles.buttonStyle}
-                        textStyle={styles.buttonTextStyle}
-                    >
+            <Container>
+
+                <Header>
+                    <Left>
+                        <MCIcon
+                            name="menu"
+                            color={Colors.btnText}
+                            size={30}
+                            style={styles.buttonIconStyle}
+                            onPress={() => {
+                                navigate('DrawerToggle')
+                            }}/>
+                    </Left>
+                    <Body>
+                        <Title>{project.name}</Title>
+                    </Body>
+                    <Right>
                         <EntypoIcon
-                            name="back"
+                            name="add-to-list"
                             color={Colors.btnText}
                             size={30}
                             style={styles.buttonIconStyle}
                         />
-                    </Button>
-                </View>
-            </View>
+                    </Right>
+                </Header>
+
+                <Content>
+                    <TaskList
+                        userTasks={projectTasks}
+                        onTaskSelect={this._onPressTask}
+                    />
+                </Content>
+
+            </Container>
         )
     }
 }

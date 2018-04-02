@@ -2,15 +2,24 @@ import React from 'react'
 
 import {
     View,
-    Text,
     ScrollView,
     FlatList, } from 'react-native'
 
 import {
+    Body,
+    Button,
+    Container,
+    Content,
+    Footer,
+    FooterTab,
+    Header,
+    Left,
     List,
-    ListItem } from "react-native-elements"
+    ListItem,
+    Right,
+    Text,
+    Title } from 'native-base';
 
-import Button from 'react-native-smart-button'
 import TaskTimer from '../Components/TaskTimer'
 import TaskList from '../Components/TaskList'
 import TimesheetList from '../Components/TimesheetList'
@@ -24,6 +33,7 @@ import styles from './Styles/HomeScreenStyle'
 import { Colors } from '../Themes/'
 
 import EntypoIcon from 'react-native-vector-icons/Entypo'
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import I18n from '../I18n';
 
@@ -76,10 +86,33 @@ class TaskScreen extends React.Component {
         const { navigate } = this.props.navigation
 
         return (
-            <View style={styles.containerPage}>
-                <Text style={styles.headerText}>{task.project_id[1]}</Text>
-                <Text style={styles.headerText}>{task.name}</Text>
-                <View style={styles.container}>
+            <Container>
+                <Header>
+                    <Left>
+                        <MCIcon
+                            name="menu"
+                            color={Colors.btnText}
+                            size={30}
+                            style={styles.buttonIconStyle}
+                            onPress={() => {
+                                navigate('DrawerToggle')
+                            }}/>
+                    </Left>
+                    <Body>
+                        <Title>{task.project_id[1]} - {task.name}</Title>
+                    </Body>
+                    <Right>
+                        <EntypoIcon
+                            name="add-to-list"
+                            color={Colors.btnText}
+                            size={30}
+                            style={styles.buttonIconStyle}
+                        />
+                    </Right>
+                </Header>
+
+
+                <Content>
                     <ScrollView>
                         <Text style={styles.normalText}>{I18n.t('planedhours')}: {task.planed_hours}</Text>
                         <Text style={styles.normalText}>{I18n.t('manager')}: {task.manager_id[1]}</Text>
@@ -92,27 +125,13 @@ class TaskScreen extends React.Component {
                         userTasks={childTasks}
                         onTaskSelect={this.handleSelectTask}
                     />
-
-                </View>
-                <TaskTimer />
-                <View style={{
-                    flexDirection: 'row',
-                    marginBottom: 10
-                    }}>
-                    <Button
-                        onPress={() => this._onPressBack()}
-                        style={styles.buttonStyle}
-                        textStyle={styles.buttonTextStyle}
-                    >
-                        <EntypoIcon
-                            name="back"
-                            color={Colors.btnText}
-                            size={30}
-                            style={styles.buttonIconStyle}
-                        />
-                    </Button>
-                </View>
-            </View>
+                </Content>
+                <Footer>
+                    <FooterTab>
+                        <TaskTimer />
+                    </FooterTab>
+                </Footer>
+            </Container>
         )
     }
 }

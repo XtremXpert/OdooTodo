@@ -1,17 +1,21 @@
 import React, { Component } from 'react'
 
-import {
-    View,
-    Text,
-    ScrollView,
-    FlatList,
-    TouchableOpacity } from 'react-native'
 
 import {
+    Image } from 'react-native'
+
+import {
+    Body,
+    Button,
+    Container,
+    Content,
+    Header,
+    Left,
     List,
-    ListItem } from "react-native-elements"
-
-import Button from 'react-native-smart-button'
+    ListItem,
+    Right,
+    Text,
+    Title } from 'native-base';
 
 import { connect } from 'react-redux'
 import UsersActions from '../Redux/UsersRedux'
@@ -20,10 +24,9 @@ import UsersActions from '../Redux/UsersRedux'
 import styles from './Styles/UsersScreenStyle'
 import { Colors } from '../Themes/'
 import EntypoIcon from 'react-native-vector-icons/Entypo'
-
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import I18n from '../I18n';
-
 
 class UsersScreen extends Component {
     _keyExtractor = (item, index) => item.id;
@@ -39,52 +42,53 @@ class UsersScreen extends Component {
 
     render () {
         const { users } = this.props
-        return (
-            <View style={styles.containerPage}>
-                <Text style={styles.headerText}>{I18n.t('userslist')}</Text>
-                <View style={styles.container}>
-                    <ScrollView>
-                        <List style={styles.container}>
-                            <FlatList
-                                data={users}
-                                keyExtractor={this._keyExtractor}
-                                renderItem={({item}) => (
-                                    <ListItem
-                                        title={item.name}
-                                        subtitle={item.email}
-                                        onPress={() => this._onPressItem(item)}
-                                    />
-                                )}
-                            />
-                        </List>
-                    </ScrollView>
-                </View>
+        const { navigate } = this.props.navigation
 
-                <View style={{
-                    flexDirection: 'row',
-                    marginBottom: 10
-                    }}>
-                    <Button
-                        onPress={() => this._onPressBack()}
-                        style={styles.buttonStyle}
-                        textStyle={styles.buttonTextStyle}
-                    >
-                        <EntypoIcon
-                            name="back"
+        return (
+            <Container>
+
+                <Header>
+                    <Left>
+                        <MCIcon
+                            name="menu"
                             color={Colors.btnText}
                             size={30}
                             style={styles.buttonIconStyle}
-                        />
-                    </Button>
-                </View>
-            </View>
+                            onPress={() => {
+                                navigate('DrawerToggle')
+                            }}/>
+                    </Left>
+                    <Body>
+                        <Title>Users</Title>
+                    </Body>
+                    <Right>
+                    </Right>
+                </Header>
+
+                <Content style={styles.container}>
+                    <List dataArray={users}
+                        renderRow={(item) =>
+                          <ListItem onPress={() => this._onPressItem(item)} >
+                              <Image
+                                  style={{
+                                      height: 60,
+                                      width: 60
+                                  }}
+                                  source={{uri: `data:image/png;base64,${item.image_small}`}}
+                              />
+                              <Text>{item.name} - {item.email}</Text>
+                          </ListItem>
+                      }>
+                    </List>
+                </Content>
+
+            </Container>
 
         )
     }
 }
 
 const mapStateToProps = (state) => {
-
     return {
         userId: state.login.userId,
         sessionId: state.login.sessionId,

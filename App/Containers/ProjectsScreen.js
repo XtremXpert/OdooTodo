@@ -1,25 +1,28 @@
 import React, { Component } from 'react'
 
 import {
-    ScrollView,
-    View,
-    FlatList,
-    Text,
-    TouchableOpacity  } from 'react-native'
-
-import {
+    Body,
+    Button,
+    Container,
+    Content,
+    Header,
+    Left,
     List,
-    ListItem } from "react-native-elements"
-
-import Button from 'react-native-smart-button'
+    ListItem,
+    Right,
+    Text,
+    Title } from 'native-base';
 
 import { connect } from 'react-redux'
+
 import ProjectsActions, { getSortedProject } from '../Redux/ProjectsRedux'
 
 // Styles
 import styles from './Styles/ProjectsScreenStyle'
 import { Colors } from '../Themes/'
+
 import EntypoIcon from 'react-native-vector-icons/Entypo'
+import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import I18n from '../I18n';
 
@@ -32,64 +35,53 @@ class ProjectsScreen extends Component {
 
     _onPressItem = (item) => {
         this.props.setSelectedProject(item.id)
-        this.props.navigation.navigate('ProjectScreen')
+        this.props.navigation.setParams({ projectName: item.name })
+        this.props.navigation.navigate('Project')
     };
 
     render () {
         const { projects } = this.props
-        return (
-            <View style={styles.containerPage}>
-                <Text style={styles.headerText}>{I18n.t('projectslist')}</Text>
-                <View style={styles.container}>
-                    <ScrollView>
-                        <List>
-                            <FlatList
-                                data={projects}
-                                keyExtractor={this._keyExtractor}
-                                renderItem={({item}) => (
-                                    <ListItem
-                                        title={item.name}
-                                        subtitle={item.partner_id ? item.partner_id[1] : "Internal project"}
-                                        onPress={() => this._onPressItem(item)}
-                                    />
-                                )}
-                            />
-                        </List>
-                    </ScrollView>
-                </View>
-                <View style={{
-                    flexDirection: 'row',
-                    marginBottom: 10
-                    }}>
+        const { navigate } = this.props.navigation
 
-                    <Button
-                        onPress={() => this._onPressBack()}
-                        style={styles.buttonStyle}
-                        textStyle={styles.buttonTextStyle}
-                    >
-                        <EntypoIcon
-                            name="back"
+        return (
+            <Container>
+
+                <Header>
+                    <Left>
+                        <MCIcon
+                            name="menu"
                             color={Colors.btnText}
                             size={30}
                             style={styles.buttonIconStyle}
-                        />
-                    </Button>
-
-                    <Button
-                        onPress={() => this._onPressBack()}
-                        style={styles.buttonStyle}
-                        textStyle={styles.buttonTextStyle}
-                    >
+                            onPress={() => {
+                                navigate('DrawerToggle')
+                            }}/>
+                    </Left>
+                    <Body>
+                        <Title>Projects</Title>
+                    </Body>
+                    <Right>
                         <EntypoIcon
                             name="add-to-list"
                             color={Colors.btnText}
                             size={30}
                             style={styles.buttonIconStyle}
                         />
-                    </Button>
+                    </Right>
+                </Header>
 
-                </View>
-            </View>
+                <Content>
+                    <List dataArray={projects}
+                        renderRow={(item) =>
+                          <ListItem onPress={() => this._onPressItem(item)} >
+                              <Text>{item.name}</Text>
+                          </ListItem>
+
+                      }>
+                    </List>
+                </Content>
+
+            </Container>
         )
     }
 }

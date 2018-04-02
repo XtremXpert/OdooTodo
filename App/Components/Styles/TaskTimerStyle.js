@@ -5,9 +5,7 @@ export default StyleSheet.create({
     ...ApplicationStyles.screen,
 
     buttonStyleStart: {
-        margin: 10,
-        height: 80,
-        marginHorizontal: 80,
+
         backgroundColor: 'green',
         borderRadius: 3,
         borderWidth: StyleSheet.hairlineWidth,
@@ -15,9 +13,7 @@ export default StyleSheet.create({
     },
 
     buttonStyleStop: {
-        margin: 10,
-        height: 80,
-        marginHorizontal: 80,
+
         backgroundColor: 'red',
         borderRadius: 3,
         borderWidth: StyleSheet.hairlineWidth,
@@ -25,7 +21,7 @@ export default StyleSheet.create({
     },
 
     buttonStopTextStyle: {
-        fontSize: 37,
+        fontSize: 36,
         color: 'white'
     },
 });

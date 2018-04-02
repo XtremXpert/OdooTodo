@@ -5,35 +5,36 @@ import AppNavigation from '../Navigation/AppNavigation'
 const { getStateForAction } = AppNavigation.router
 
 const INITIAL_STATE = getStateForAction(
-  navigate({ routeName: 'LoadingScreen' })
+    navigate({ routeName: 'LoadingScreen' })
 )
 
 const NOT_LOGGED_IN_STATE = getStateForAction(reset({
-  index: 0,
-  actions: [
-    navigate({ routeName: 'NotLoggedInStack' })
-  ]
+    index: 0,
+    actions: [
+        navigate({ routeName: 'DrawerStack' })
+    ]
 }))
 
 const LOGGED_IN_STATE = getStateForAction(reset({
-  index: 0,
-  actions: [
-    navigate({ routeName: 'LoggedInStack' })
+    index: 0,
+    actions: [
+    navigate({ routeName: 'DrawerStack' })
   ]
 }))
 
 export function reducer (state = INITIAL_STATE, action) {
-  let nextState
-  switch (action.type) {
-    case 'SET_REHYDRATION_COMPLETE':
-      return NOT_LOGGED_IN_STATE
-    case 'LOGOUT':
-      return NOT_LOGGED_IN_STATE
-    case 'LOGIN_SUCCESS':
-      return LOGGED_IN_STATE
-    case 'AUTO_LOGIN':
-      return LOGGED_IN_STATE
-  }
-  nextState = getStateForAction(action, state)
-  return nextState || state
+    console.tron.log (state)
+    let nextState
+    switch (action.type) {
+        case 'SET_REHYDRATION_COMPLETE':
+            return NOT_LOGGED_IN_STATE
+        case 'LOGOUT':
+            return NOT_LOGGED_IN_STATE
+        case 'LOGIN_SUCCESS':
+            return LOGGED_IN_STATE
+        case 'AUTO_LOGIN':
+            return LOGGED_IN_STATE
+    }
+    nextState = getStateForAction(action, state)
+    return nextState || state
 }

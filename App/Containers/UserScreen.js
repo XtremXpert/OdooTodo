@@ -20,7 +20,19 @@ import { Colors } from '../Themes/'
 
 import EntypoIcon from 'react-native-vector-icons/Entypo'
 
+import I18n from '../I18n';
+
 class UserScreenScreen extends React.Component {
+    static navigationOptions = {
+        title: I18n.t('userslist'),
+        headerRight: (
+            <Button
+                onPress={() => alert('This is a button!')}
+                title="Info"
+                color="#fff"
+            />)
+    }
+
     _onPressBack = () => {
          this.props.navigation.navigate( 'UsersScreen' );
     }
