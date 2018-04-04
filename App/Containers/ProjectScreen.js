@@ -48,12 +48,12 @@ class ProjectScreen extends Component {
         const project = this.props.project
         const projectTasks = this.props.tasks
         const { navigate } = this.props.navigation
-        
+
         return (
             <Container>
 
                 <Header>
-                    <Left>
+                    <Left style={styles.headerLeft}>
                         <MCIcon
                             name="menu"
                             color={Colors.btnText}
@@ -63,10 +63,10 @@ class ProjectScreen extends Component {
                                 navigate('DrawerToggle')
                             }}/>
                     </Left>
-                    <Body>
+                    <Body style={styles.headerBody}>
                         <Title>{project.name}</Title>
                     </Body>
-                    <Right>
+                    <Right style={styles.headerRight}>
                         <EntypoIcon
                             name="add-to-list"
                             color={Colors.btnText}

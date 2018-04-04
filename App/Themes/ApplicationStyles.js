@@ -54,11 +54,10 @@ const ApplicationStyles = {
 
         normalText: {
             ...Fonts.style.normal,
-            color: Colors.snow,
+            color: Colors.btnPrimary,
             paddingHorizontal: Metrics.doubleBaseMargin,
             marginVertical: Metrics.smallMargin,
             textAlign: 'left',
-            backgroundColor: "rgba(92, 99,216, 1)",
 
         },
 
@@ -159,6 +158,21 @@ const ApplicationStyles = {
             flexDirection: 'row',
             flex: 1,
             alignItems: 'center',
+        },
+
+        headerLeft: {
+            flex: 0,
+            flexShrink: 1,
+        },
+
+        headerBody: {
+            flex: 1,
+            flexGrow: 1,
+        },
+
+        headerRight: {
+            flex: 0,
+            flexShrink: 1,
         },
 
     },

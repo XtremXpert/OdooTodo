@@ -47,7 +47,7 @@ class ProjectsScreen extends Component {
             <Container>
 
                 <Header>
-                    <Left>
+                    <Left style={styles.headerLeft}>
                         <MCIcon
                             name="menu"
                             color={Colors.btnText}
@@ -57,10 +57,10 @@ class ProjectsScreen extends Component {
                                 navigate('DrawerToggle')
                             }}/>
                     </Left>
-                    <Body>
+                    <Body style={styles.headerBody}>
                         <Title>Projects</Title>
                     </Body>
-                    <Right>
+                    <Right style={styles.headerRight}>
                         <EntypoIcon
                             name="add-to-list"
                             color={Colors.btnText}

@@ -32,6 +32,26 @@ const create = ( baseURL = 'http://demo-projet.xtremxpert.com/' ) => {
         return odoo.post(url, json )
     }
 
+    const create = (model, paramsNew, callback) => {
+        const url = 'web/dataset/call_kw'
+
+        const params = {
+            model,
+            method: 'create',
+            args: [ paramsNew ],
+            kwargs: {
+              context: this.context,
+            },
+          }
+
+        const json = JSON.stringify({
+            jsonrpc: '2.0',
+            id: new Date().getUTCMilliseconds(),
+            method: 'call',
+            params});
+
+        return odoo.post(url, json )
+    };
     // basic search
     const search = (model, paramsIn) => {
         const url = 'web/dataset/call_kw'
@@ -50,7 +70,7 @@ const create = ( baseURL = 'http://demo-projet.xtremxpert.com/' ) => {
             id: new Date().getUTCMilliseconds(),
             method: 'call',
             params });
-        return odoo.post(url, json ), data
+        return odoo.post(url, json )
   }
 
   // basic search_read
@@ -123,7 +143,7 @@ const create = ( baseURL = 'http://demo-projet.xtremxpert.com/' ) => {
     const getTimesheets = ( sessionId, projectIds) => {
         odoo.setHeader('Cookie': sessionId)
         return search_read('account.analytic.line', {
-            domain: [ [ 'project_id', '=', projectIds ] ],
+            domain: [ [ 'project_id', 'in', projectIds ] ],
 //          fields: ['name','id','project_id']
         })
 
@@ -168,13 +188,26 @@ const create = ( baseURL = 'http://demo-projet.xtremxpert.com/' ) => {
 
     }
 
+    const createTimesheet = ( sessionId, name, date, unit_amount, task_id, user_id ) => {
+        odoo.setHeader('Cookie': sessionId)
+        return create('account.analytic.line', {
+            name: 'test',
+            date: date,
+            unit_amount: unit_amout,
+            task_id: task_id,
+            user_id:user_id,
+//          fields: ['name','id','project_id']
+        })
+    }
+
 
   return {
     login,
     getUsers,
     getTasks,
     getProjects,
-    getTimesheets
+    getTimesheets,
+    createTimesheet
   }
 }
 

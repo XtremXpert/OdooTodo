@@ -1,32 +1,47 @@
 import React from 'react'
 
 import {
-    View,
-    ScrollView,
-    FlatList, } from 'react-native'
-
-import {
     Body,
     Button,
+    Card,
     Container,
     Content,
     Footer,
     FooterTab,
+    Form,
     Header,
+    H1,
+    H2,
+    H3,
+    Input,
+    Item,
+    Label,
     Left,
     List,
     ListItem,
     Right,
+    Segment,
     Text,
     Title } from 'native-base';
+
+import HTML from 'react-native-render-html';
+
+import {
+    Col,
+    Row,
+    Grid } from 'react-native-easy-grid';
 
 import TaskTimer from '../Components/TaskTimer'
 import TaskList from '../Components/TaskList'
 import TimesheetList from '../Components/TimesheetList'
+import TaskForm from '../Components/TaskForm'
 
 import { connect } from 'react-redux'
 
-import TasksActions, { getSelectedTask, getSelectedTaskChilds } from '../Redux/TasksRedux'
+import TasksActions, {
+    getSelectedTask,
+    getSelectedTaskChilds } from '../Redux/TasksRedux'
+
 import { selectTaskTimesheets } from '../Redux/TimesheetsRedux'
 
 import styles from './Styles/HomeScreenStyle'
@@ -41,6 +56,7 @@ class TaskScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            activeSegment: 'details',
             startTime: null,
             curTime: 0
         };
@@ -50,9 +66,9 @@ class TaskScreen extends React.Component {
          this.props.navigation.goBack();
     }
 
-    _keyExtractor = (item, index) => item.id;
-
     _onPressStart = () => {
+        console.tron.log(this.props)
+        this.props.createTimesheet2('name', curTime, 0, task.id, 8)
         this.setState({
             startTime : new Date()
         })
@@ -67,6 +83,9 @@ class TaskScreen extends React.Component {
     }
 
     _onPressStop = () => {
+
+
+
         clearInterval(this.taskTimer)
     }
 
@@ -88,7 +107,7 @@ class TaskScreen extends React.Component {
         return (
             <Container>
                 <Header>
-                    <Left>
+                    <Left style={styles.headerLeft}>
                         <MCIcon
                             name="menu"
                             color={Colors.btnText}
@@ -98,10 +117,10 @@ class TaskScreen extends React.Component {
                                 navigate('DrawerToggle')
                             }}/>
                     </Left>
-                    <Body>
+                    <Body style={styles.headerBody}>
                         <Title>{task.project_id[1]} - {task.name}</Title>
                     </Body>
-                    <Right>
+                    <Right style={styles.headerRight}>
                         <EntypoIcon
                             name="add-to-list"
                             color={Colors.btnText}
@@ -110,21 +129,54 @@ class TaskScreen extends React.Component {
                         />
                     </Right>
                 </Header>
-
-
+                <Segment>
+                    <Button
+                        active={this.state.activeSegment === 'details'}
+                        onPress={() => this.setState({ activeSegment: 'details' })}
+                        first
+                        >
+                        <Text>{I18n.t('details')}</Text>
+                    </Button>
+                    <Button
+                        active={this.state.activeSegment === 'evolution'}
+                        onPress={() => this.setState({ activeSegment: 'evolution' })}
+                        >
+                        <Text>{I18n.t('evolution')}</Text>
+                    </Button>
+                    <Button
+                        active={this.state.activeSegment === 'notes'}
+                        onPress={() => this.setState({ activeSegment: 'notes' })}
+                        last>
+                        <Text>{I18n.t('notes')}</Text>
+                    </Button>
+                </Segment>
                 <Content>
-                    <ScrollView>
-                        <Text style={styles.normalText}>{I18n.t('planedhours')}: {task.planed_hours}</Text>
-                        <Text style={styles.normalText}>{I18n.t('manager')}: {task.manager_id[1]}</Text>
-                        <Text style={styles.normalText}>{I18n.t('stage')}: {task.stage_id[1]}</Text>
-                        <TimesheetList
-                            timesheets={timesheets}
-                        />
-                    </ScrollView>
-                    <TaskList
-                        userTasks={childTasks}
-                        onTaskSelect={this.handleSelectTask}
-                    />
+                    { this.state.activeSegment === 'details' &&
+                        <TaskForm task={task} />
+                    }
+                    { this.state.activeSegment === 'evolution' &&
+                        <Grid style={{padding:10}}>
+                            <Row style={{flex:0, paddingHorizontal:10}}>
+                                <H1>{I18n.t('timesheets')}</H1>
+                            </Row>
+                            <Row style={{flex:1}}>
+                                <TimesheetList
+                                    timesheets={timesheets}
+                                />
+                            </Row>
+                            <Row style={{flex:0, paddingTop: 10, paddingHorizontal:10}}>
+                                <H1>{I18n.t('subtasks')}</H1>
+                            </Row>
+                            <Row style={{flex:1}}>
+                                <TaskList
+                                    userTasks={childTasks}
+                                    onTaskSelect={this.handleSelectTask}
+                                />
+                            </Row>
+                        </Grid>                    }
+                    {/* { this.state.activeSegment === 'notes' &&
+
+                    } */}
                 </Content>
                 <Footer>
                     <FooterTab>
@@ -155,6 +207,9 @@ const mapDispatchToProps = (dispatch) => {
         getTasks: (sessionId) => dispatch(TasksActions.tasksRequest(sessionId)),
         getUsers: (sessionId) => dispatch(UsersActions.usersRequest(sessionId)),
         getProjects: (sessionId) => dispatch(ProjectsActions.projectsRequest(sessionId)),
+        createTimesheet: (name, date, unit_amount, task_id, user_id) =>
+            dispatch(TimesheetsActions.timesheetsAdd(name, date, unit_amount, task_id, user_id)),
+
     }
 }
 

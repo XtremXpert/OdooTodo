@@ -2,15 +2,21 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
 import {
-    FlatList,
-    View,
-    ScrollView,
-    Text,
-    KeyboardAvoidingView } from 'react-native'
-
-import {
+    Badge,
+    Body,
+    Button,
+    Container,
+    Content,
+    Footer,
+    FooterTab,
+    Header,
+    Label,
+    Left,
     List,
-    ListItem } from "react-native-elements"
+    ListItem,
+    Right,
+    Text,
+    Title } from 'native-base';
 
     // Styles
 import { Colors } from '../Themes/'
@@ -32,23 +38,28 @@ export default class TaskList extends Component {
 
   render () {
     return (
-        <View style={styles.container}>
-            <ScrollView style={styles.container}>
-                <List>
-                    <FlatList
-                        data={this.props.userTasks}
-                        keyExtractor={this._keyExtractor}
-                        renderItem={({item}) => (
-                            <ListItem
-                                title={item.name}
-                                subtitle={item.project_id[1]}
-                                onPress={() => this.props.onTaskSelect(item.id)}
-                            />
-                        )}
-                    />
+        <Container>
+            <Content>
+
+                <List dataArray={this.props.userTasks}
+                    renderRow={(item) =>
+                        <ListItem
+                            onPress={() => this.props.onTaskSelect(item.id)}
+                            style={styles.listItem} >
+                            <Body>
+                                <Title style={styles.title}>
+                                    {item.name}
+                                </Title>
+                                <Text>
+                                    {item.project_id[1]}
+                                </Text>
+                            </Body>
+                        </ListItem>
+                    }>
                 </List>
-            </ScrollView>
-        </View>
+
+            </Content>
+        </Container>
     )
   }
 }

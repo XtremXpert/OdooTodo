@@ -15,6 +15,7 @@ import {
     ListItem,
     Right,
     Text,
+    Thumbnail,
     Title } from 'native-base';
 
 import { connect } from 'react-redux'
@@ -48,7 +49,7 @@ class UsersScreen extends Component {
             <Container>
 
                 <Header>
-                    <Left>
+                    <Left style={styles.headerLeft}>
                         <MCIcon
                             name="menu"
                             color={Colors.btnText}
@@ -58,10 +59,10 @@ class UsersScreen extends Component {
                                 navigate('DrawerToggle')
                             }}/>
                     </Left>
-                    <Body>
+                    <Body style={styles.headerBody}>
                         <Title>Users</Title>
                     </Body>
-                    <Right>
+                    <Right style={styles.headerRight}>
                     </Right>
                 </Header>
 
@@ -69,11 +70,8 @@ class UsersScreen extends Component {
                     <List dataArray={users}
                         renderRow={(item) =>
                           <ListItem onPress={() => this._onPressItem(item)} >
-                              <Image
-                                  style={{
-                                      height: 60,
-                                      width: 60
-                                  }}
+                              <Thumbnail
+                                  şmall
                                   source={{uri: `data:image/png;base64,${item.image_small}`}}
                               />
                               <Text>{item.name} - {item.email}</Text>

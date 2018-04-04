@@ -2,73 +2,60 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 
 import {
-    FlatList,
-    View,
-    ScrollView,
-    Text,
-    KeyboardAvoidingView } from 'react-native'
-
-import {
+    Badge,
+    Body,
+    Button,
+    Container,
+    Content,
+    Footer,
+    FooterTab,
+    Header,
+    Label,
+    Left,
     List,
-    ListItem } from "react-native-elements"
+    ListItem,
+    Right,
+    Text,
+    Title } from 'native-base';
 
-    // Styles
+// Styles
 import { Colors } from '../Themes/'
 import styles from './Styles/TimesheetListStyle'
 
 export default class TimesheetList extends Component {
-  // // Prop type warnings
+    // Prop type warnings
     static propTypes = {
         timesheets: PropTypes.array,
     }
-  //
-  // // Defaults for props
+
+  // Defaults for props
   // static defaultProps = {
   //   someSetting: false
   // }
 
-  _keyExtractor = (item, index) => item.id;
+    _keyExtractor = (item, index) => item.id;
 
-  render () {
-    return (
-        <View style={styles.container}>
-            <ScrollView style={styles.container}>
-                <List>
-                    <FlatList
-                        data={this.props.timesheets}
-                        keyExtractor={this._keyExtractor}
-                        renderItem={({item}) => (
-                            <ListItem
-                                containerStyle={styles.listItem}
-                                wrapperStyle={styles.listItem}
-                                titleContainerStyle={styles.listItem}
-                                hideChevron
-                                title={
-                                    <View style={styles.row}>
-                                        <View style={styles.cell}>
-                                            <Text style={styles.cellText}>
-                                                {item.date}
-                                            </Text>
-                                        </View>
-                                        <View style={styles.cell}>
-                                            <Text style={styles.cellText}>
-                                                {item.user_id[1]}
-                                            </Text>
-                                        </View>
-                                        <View style={styles.cell}>
-                                            <Text style={styles.cellText}>
-                                                {item.unit_amount} hours
-                                            </Text>
-                                        </View>
-                                    </View>
-                                }
-
-                            />
-                        )}
-                    />
-                </List>
-            </ScrollView>
-        </View>
-    )
-  }
+    render () {
+        return (
+            <List dataArray={this.props.timesheets}
+                renderRow={(item) =>
+                    <ListItem style={styles.listItem}>
+                        <Text style={styles.cellText}>
+                            {item.date}
+                        </Text>
+                        <Body>
+                            <Text style={styles.cellText}>
+                                {item.user_id[1]}
+                            </Text>
+                        </Body>
+                        <Right>
+                            <Text style={styles.cellText}>
+                                {item.unit_amount} hours
+                            </Text>
+                        </Right>
+                    </ListItem>
+                }>
+            </List>
+        )
+    }
 }

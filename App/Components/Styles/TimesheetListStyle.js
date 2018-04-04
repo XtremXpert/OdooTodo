@@ -11,15 +11,16 @@ export default StyleSheet.create({
     },
 
     listItem: {
-        paddingVertical: 0,
-        marginVertical: 0,
+        marginLeft: 4,
+        marginRight: 4,
+        paddingTop: 2,
+        paddingBottom: 0,
     },
 
     list: {
         marginTop: 0,
         borderTopWidth: 0,
         borderBottomWidth: 0,
-        borderBottomColor: '#cbd2d9'
     },
 
     cell: {

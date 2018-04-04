@@ -1,17 +1,25 @@
 import React, { PropTypes } from 'react'
 
 import {
+    Body,
+    Container,
+    Header,
+    Left,
+    Content,
+    Title,
+    Right,
+    Button,
+    Text } from 'native-base';
+
+
+import {
     View,
     ScrollView,
-    Text,
     TextInput,
     TouchableOpacity,
     Image,
     Keyboard,
-    LayoutAnimation
-} from 'react-native'
-
-import Button from 'react-native-smart-button'
+    LayoutAnimation } from 'react-native'
 
 import { connect } from 'react-redux'
 import LoginActions from '../Redux/LoginRedux'
@@ -146,20 +154,22 @@ class LoginScreen extends React.Component {
                         <View style={styles.container}>
 
                             <Button
+                                full
                                 onPress={this.handlePressLogin}
                                 style={styles.buttonStyle}
                                 textStyle={styles.buttonTextStyle}
                             >
-                                {I18n.t('signIn')}
+                                <Text>{I18n.t('signIn')}</Text>
                             </Button>
                         </View>
                         <View style={styles.container}>
                             <Button
+                                full
                                 onPress={() => this.props.navigation.goBack()}
                                 style={styles.buttonStyle}
                                 textStyle={styles.buttonTextStyle}
                             >
-                                {I18n.t('cancel')}
+                                <Text>{I18n.t('cancel')}</Text>
                             </Button>
                         </View>
 

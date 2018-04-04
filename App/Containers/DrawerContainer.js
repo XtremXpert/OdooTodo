@@ -1,11 +1,6 @@
 import React from 'react'
 
 import {
-    StyleSheet,
-    View,
-    Image } from 'react-native'
-
-import {
     Container,
     Header,
     Footer,
@@ -26,9 +21,9 @@ import UsersActions from '../Redux/UsersRedux'
 import styles from './Styles/DrawerContainerStyle'
 import { Colors } from '../Themes/'
 
-import OcticonsIcon from 'react-native-vector-icons/Octicons'
 import EntypoIcon from 'react-native-vector-icons/Entypo'
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import OcticonsIcon from 'react-native-vector-icons/Octicons'
 
 // Same when working with expo
 // import OcticonsIcon from '@expo/vector-icons/Octicons'
@@ -144,10 +139,8 @@ export class DrawerContainer extends React.Component {
                             style={styles.buttonIconStyle} />
                         <Text>{I18n.t('LogOut')}</Text>
                     </Button>
-                    <View style={styles.buttonRow}>
-
-                    </View>
                 </Content>
+
                 <Footer>
                     <Button
                         style={styles.buttonSmall}

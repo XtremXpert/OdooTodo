@@ -7,6 +7,7 @@ const { Types, Creators } = createActions({
     timesheetsRequest: ['sessionId', 'projectIds'],
     timesheetsSuccess: ['payload'],
     timesheetsFailure: null,
+    timesheetsAdd: [ 'unit_amount', 'task_id', 'user_id', 'date' ]
     //setSelectedTask: ['task'],
     //clearSelectedUser: null,
 })
@@ -74,12 +75,25 @@ export const selectUserTimesheets = (state) => {
 
 // request the data from an api
 export const request = (state, { projectIds } ) => {
-    console.tron.log('Identify list of project_id')
-    console.tron.log(projectIds)
     return state.merge({
         fetching: true,
         payload: null
     })
+}
+
+export const add = (state, { name, date, unit_amount, task_id, user_id } ) => {
+    console.tron.log('state')
+    console.tron.log( action )
+    return {
+        ...state,
+        list: [...state.list, {
+            name: name,
+            date: date,
+            unit_amount: unit_amount,
+            task_id: task_id,
+            user_id: user_id
+        } ]
+    }
 }
 
 // successful api lookup == return the payload to the reducer
@@ -101,5 +115,6 @@ export const reducer = createReducer(INITIAL_STATE, {
     [Types.TIMESHEETS_REQUEST]: request,
     [Types.TIMESHEETS_SUCCESS]: success,
     [Types.TIMESHEETS_FAILURE]: failure,
+    [Types.TIMESHEETS_ADD]: add,
 //    [Types.SET_SELECTED_TIMESHEETS]: setSelectedTask
 })

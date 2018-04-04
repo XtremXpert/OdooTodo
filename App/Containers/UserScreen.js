@@ -1,10 +1,20 @@
 import React from 'react'
 
 import {
-    View,
-    Text } from 'react-native'
+    Body,
+    Button,
+    Container,
+    Content,
+    Footer,
+    FooterTab,
+    Header,
+    Left,
+    List,
+    ListItem,
+    Right,
+    Text,
+    Title } from 'native-base';
 
-import Button from 'react-native-smart-button'
 import TaskList from '../Components/TaskList'
 
 import { connect } from 'react-redux'
@@ -48,30 +58,15 @@ class UserScreenScreen extends React.Component {
         const user = this.props.user
         const userTasks = this.props.tasks
         return (
-            <View style={styles.containerPage}>
+            <Container>
                 <Text style={styles.headerText}>{user.name}</Text>
-                <TaskList
-                    userTasks={userTasks}
-                    onTaskSelect={this._onPressTask}
-                />
-                <View style={{
-                    flexDirection: 'row',
-                    marginBottom: 10
-                    }}>
-                    <Button
-                        onPress={() => this._onPressBack()}
-                        style={styles.buttonStyle}
-                        textStyle={styles.buttonTextStyle}
-                    >
-                        <EntypoIcon
-                            name="back"
-                            color={Colors.btnText}
-                            size={30}
-                            style={styles.buttonIconStyle}
-                        />
-                    </Button>
-                </View>
-            </View>
+                <Content>
+                    <TaskList
+                        userTasks={userTasks}
+                        onTaskSelect={this._onPressTask}
+                    />
+                </Content>
+            </Container>
         )
     }
 }

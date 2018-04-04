@@ -1,7 +1,5 @@
 import React from 'react'
 
-import { View } from 'react-native'
-
 import {
     Body,
     Container,
@@ -19,18 +17,10 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { connect } from 'react-redux'
 
-// import LoginActions from '../Redux/LoginRedux'
 import TasksActions, { selectLoggedUserTasks } from '../Redux/TasksRedux'
-// import ProjectsActions, { getAllProjects } from '../Redux/ProjectsRedux'
-// import TimesheetsActions from '../Redux/TimesheetsRedux'
-// import UsersActions from '../Redux/UsersRedux'
 
 import styles from './Styles/HomeScreenStyle'
 import { Colors } from '../Themes/'
-
-// import OcticonsIcon from 'react-native-vector-icons/Octicons'
-// import EntypoIcon from 'react-native-vector-icons/Entypo'
-// import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import I18n from '../I18n';
 
@@ -51,7 +41,7 @@ class HomeScreen extends React.Component {
         return (
             <Container>
                 <Header>
-                    <Left>
+                    <Left style={styles.headerLeft}>
                         <MCIcon
                             name="menu"
                             color={Colors.btnText}
@@ -61,10 +51,10 @@ class HomeScreen extends React.Component {
                                 navigate('DrawerToggle')
                             }}/>
                     </Left>
-                    <Body>
+                    <Body style={styles.headerBody}>
                         <Title>Accueil</Title>
                     </Body>
-                    <Right />
+                    <Right style={styles.headerRight} />
                 </Header>
                 <Content>
                     <TaskList
@@ -73,7 +63,6 @@ class HomeScreen extends React.Component {
                     />
                 </Content>
             </Container>
-
         )
     }
 }
