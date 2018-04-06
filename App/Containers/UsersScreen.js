@@ -9,6 +9,8 @@ import {
     Button,
     Container,
     Content,
+    Fab,
+    Icon,
     Header,
     Left,
     List,
@@ -30,6 +32,13 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import I18n from '../I18n';
 
 class UsersScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeFab: false,
+        };
+    }
+        
     _keyExtractor = (item, index) => item.id;
 
     _onPressBack = () => {
@@ -79,7 +88,27 @@ class UsersScreen extends Component {
                       }>
                     </List>
                 </Content>
-
+                <Fab
+                  active={this.state.activeFab}
+//                  active=false
+                  direction="up"
+                  containerStyle={{ }}
+                  style={{ backgroundColor: '#5067FF' }}
+                  position="bottomRight"
+                  // onLongPress={() =>  navigate('DrawerToggle')}
+                  // onPress={() => this.setState({ active: !this.state.active })}>
+                  onPress={() =>  navigate('DrawerToggle')} >
+                  <Icon name="share" />
+                  <Button style={{ backgroundColor: '#34A34F' }}>
+                    <Icon name="logo-whatsapp" />
+                  </Button>
+                  <Button style={{ backgroundColor: '#3B5998' }}>
+                    <Icon name="logo-facebook" />
+                  </Button>
+                  <Button disabled style={{ backgroundColor: '#DD5144' }}>
+                    <Icon name="mail" />
+                  </Button>
+                </Fab>
             </Container>
 
         )

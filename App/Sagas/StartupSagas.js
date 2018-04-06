@@ -4,20 +4,19 @@ import AppStateActions from '../Redux/AppStateRedux'
 import { is } from 'ramda'
 import LoggedInActions, { isLoggedIn } from '../Redux/LoginRedux'
 
-// exported to make available for tests
-//export const selectAvatar = (state) => state.github.avatar
-export const selectLoggedInStatus = (state) => isLoggedIn(state.login)
+// Selector
+export const selectLoggedInStatus = (state) => isLoggedIn( state.login )
 
 // process STARTUP actions
 export function * startup (action) {
+    console.tron.log (this.state)
+
     yield put(AppStateActions.setRehydrationComplete())
     const isLoggedIn = yield select(selectLoggedInStatus)
 
-    console.tron.log(isLoggedIn)
+    console.tron.log (isLoggedIn)
 
     if (isLoggedIn) {
         yield put(LoggedInActions.autoLogin())
-    } else {
-        console.tron.log('Not Logged')        
     }
 }

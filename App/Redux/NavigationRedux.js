@@ -11,19 +11,19 @@ const INITIAL_STATE = getStateForAction(
 const NOT_LOGGED_IN_STATE = getStateForAction(reset({
     index: 0,
     actions: [
-        navigate({ routeName: 'DrawerStack' })
+        navigate({ routeName: 'loginStack' })
     ]
 }))
 
 const LOGGED_IN_STATE = getStateForAction(reset({
     index: 0,
     actions: [
-    navigate({ routeName: 'DrawerStack' })
+    navigate({ routeName: 'drawerStack' })
   ]
 }))
 
 export function reducer (state = INITIAL_STATE, action) {
-    console.tron.log (state)
+    console.tron.log(state)
     let nextState
     switch (action.type) {
         case 'SET_REHYDRATION_COMPLETE':

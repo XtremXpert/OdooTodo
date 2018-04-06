@@ -3,7 +3,9 @@ import React from 'react'
 import {
     Container,
     Header,
+    Fab,
     Footer,
+    Icon,
     Content,
     Button,
     Text } from 'native-base';
@@ -33,6 +35,13 @@ import OcticonsIcon from 'react-native-vector-icons/Octicons'
 import I18n from '../I18n';
 
 export class DrawerContainer extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeFab: false,
+            activeFabUp: false,
+        };
+    }
 
     _ViewProjects = () => {
         this.props.navigation.navigate( 'ProjectsScreen' );
@@ -82,13 +91,13 @@ export class DrawerContainer extends React.Component {
     }
 
     render() {
-        const { navigation } = this.props
+        const { navigate } = this.props.navigation
         return (
             <Container>
                 <Content>
                     <Button
                         style={styles.buttonBig}
-                        onPress={() => navigation.navigate('Home')}
+                        onPress={() => navigate('Home')}
                         full
                         rounded >
                         <MCIcon
@@ -101,7 +110,7 @@ export class DrawerContainer extends React.Component {
 
                     <Button
                         style={styles.buttonBig}
-                        onPress={() => navigation.navigate('Projects')}
+                        onPress={() => navigate('Projects')}
                         full
                         rounded >
                         <OcticonsIcon
@@ -115,7 +124,7 @@ export class DrawerContainer extends React.Component {
 
                     <Button
                         style={styles.buttonBig}
-                        onPress={() => navigation.navigate('Users')}
+                        onPress={() => navigate('Users')}
                         full
                         rounded >
                         <EntypoIcon
@@ -140,8 +149,16 @@ export class DrawerContainer extends React.Component {
                         <Text>{I18n.t('LogOut')}</Text>
                     </Button>
                 </Content>
-
-                <Footer>
+                <Fab
+                    active={this.state.activeFab}
+    //                  active=false
+                    direction="up"
+                    containerStyle={{ }}
+                    style={{ backgroundColor: '#5067FF' }}
+                    position="bottomRight"
+                    onLongPress={() =>  navigate('DrawerToggle')}
+                    onPress={() => this.setState({ activeFab: !this.state.activeFab })} >
+                    <Icon name="download" />
                     <Button
                         style={styles.buttonSmall}
                         onPress={this._RefreshProject}
@@ -189,7 +206,8 @@ export class DrawerContainer extends React.Component {
                             size={30}
                             style={styles.buttonIconStyle} />
                     </Button>
-                </Footer>
+                </Fab>
+
             </Container>
         )
     }

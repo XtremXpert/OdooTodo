@@ -6,6 +6,8 @@ import {
     Container,
     Content,
     Header,
+    Fab,
+    Icon,
     Left,
     List,
     ListItem,
@@ -33,6 +35,13 @@ import I18n from '../I18n';
 
 
 class ProjectScreen extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeFab: false,
+        };
+    }
+
     _onPressBack = () => {
          this.props.navigation.navigate( 'ProjectsScreen' );
     }
@@ -82,6 +91,27 @@ class ProjectScreen extends Component {
                         onTaskSelect={this._onPressTask}
                     />
                 </Content>
+
+                <Fab
+                active={this.state.activeFab}
+//                  active=false
+                direction="up"
+                containerStyle={{ }}
+                style={{ backgroundColor: '#5067FF' }}
+                position="bottomRight"
+                onLongPress={() =>  navigate('DrawerToggle')}
+                onPress={() => this.setState({ activeFab: !this.state.activeFab })} >
+                <Icon name="share" />
+                <Button style={{ backgroundColor: '#34A34F' }}>
+                    <Icon name="logo-whatsapp" />
+                </Button>
+                <Button style={{ backgroundColor: '#3B5998' }}>
+                    <Icon name="logo-facebook" />
+                </Button>
+                <Button disabled style={{ backgroundColor: '#DD5144' }}>
+                    <Icon name="mail" />
+                </Button>
+              </Fab>
 
             </Container>
         )

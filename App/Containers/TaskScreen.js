@@ -6,6 +6,7 @@ import {
     Card,
     Container,
     Content,
+    Fab,
     Footer,
     FooterTab,
     Form,
@@ -13,6 +14,7 @@ import {
     H1,
     H2,
     H3,
+    Icon,
     Input,
     Item,
     Label,
@@ -42,7 +44,9 @@ import TasksActions, {
     getSelectedTask,
     getSelectedTaskChilds } from '../Redux/TasksRedux'
 
-import { selectTaskTimesheets } from '../Redux/TimesheetsRedux'
+import TimesheetsActions, {
+    getOpenTimesheets,
+    selectTaskTimesheets } from '../Redux/TimesheetsRedux'
 
 import styles from './Styles/HomeScreenStyle'
 import { Colors } from '../Themes/'
@@ -57,8 +61,7 @@ class TaskScreen extends React.Component {
         super(props);
         this.state = {
             activeSegment: 'details',
-            startTime: null,
-            curTime: 0
+            activeFab: false,
         };
     }
 
@@ -67,26 +70,23 @@ class TaskScreen extends React.Component {
     }
 
     _onPressStart = () => {
-        console.tron.log(this.props)
-        this.props.createTimesheet2('name', curTime, 0, task.id, 8)
+        startTime = new Date()
+        this.props.openTimesheet(
+            task.id,
+            8,
+            startTime )
         this.setState({
-            startTime : new Date()
+            startTime : this.props.startTime
         })
-        this.taskTimer = setInterval( () => {
-
-            this.setState({
-//                curTime : new Date() - state.startTime
-                curTime : new Date() - this.state.startTime,
-                txtTime : this.msToTime( this.state.curTime )
-            })
-        }, 1000)
     }
 
     _onPressStop = () => {
-
-
-
-        clearInterval(this.taskTimer)
+        this.props.closeTimesheet(
+            task.id,
+            8,
+            this.props.openTimeSheets[0].startTime,
+            new Date()
+        )
     }
 
     handleSelectTask = (item) => {
@@ -95,14 +95,21 @@ class TaskScreen extends React.Component {
     }
 
     render () {
+        console.tron.log(this.props)
         const { fullname,
                 setSelectedTask,
                 task,
                 timesheets,
-                childTasks
+                childTasks,
+                openTimeSheets
             } = this.props
 
-        const { navigate } = this.props.navigation
+        const { goBack, navigate } = this.props.navigation
+
+
+        const startTime = (
+            ((openTimeSheets.length > 0) && (openTimeSheets[0].task_id == task.id))
+                ? openTimeSheets[0].date : null )
 
         return (
             <Container>
@@ -114,7 +121,7 @@ class TaskScreen extends React.Component {
                             size={30}
                             style={styles.buttonIconStyle}
                             onPress={() => {
-                                navigate('DrawerToggle')
+                                goBack()
                             }}/>
                     </Left>
                     <Body style={styles.headerBody}>
@@ -177,25 +184,57 @@ class TaskScreen extends React.Component {
                     {/* { this.state.activeSegment === 'notes' &&
 
                     } */}
+
                 </Content>
                 <Footer>
                     <FooterTab>
-                        <TaskTimer />
+                        { (openTimeSheets.length > 0  &&
+                                openTimeSheets[0].task_id[0] != task.id )
+                        ? <Text>Disabled</Text>
+                        : <TaskTimer
+                            disabled={openTimeSheets.length > 0  &&
+                                openTimeSheets[0].task_id[0] != task.id}
+                            onStopTimer={this._onPressStop}
+                            onStartTimer={this._onPressStart}
+                            startTime={startTime}
+                        />
+                    }
+
                     </FooterTab>
                 </Footer>
+                <Fab
+                  active={this.state.activeFab}
+                  direction="up"
+                  containerStyle={{ }}
+                  style={{ backgroundColor: '#5067FF' }}
+                  position="bottomRight"
+                  onLongPress={() =>  navigate('DrawerToggle')}
+                  onPress={() => this.setState({ active: !this.state.activeFab })}>
+                  <Icon name="share" />
+                  <Button style={{ backgroundColor: '#34A34F' }}>
+                    <Icon name="logo-whatsapp" />
+                  </Button>
+                  <Button style={{ backgroundColor: '#3B5998' }}>
+                    <Icon name="logo-facebook" />
+                  </Button>
+                  <Button disabled style={{ backgroundColor: '#DD5144' }}>
+                    <Icon name="mail" />
+                  </Button>
+                </Fab>
             </Container>
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    const { sessionId } = state.login
     console.tron.log(state)
+    const { sessionId } = state.login
     return {
         task: getSelectedTask(state),
         childTasks: getSelectedTaskChilds(state),
         timesheets: selectTaskTimesheets(state),
         sessionId: sessionId,
+        openTimeSheets: getOpenTimesheets(state)
 //        username: state.login.
     }
 }
@@ -207,9 +246,10 @@ const mapDispatchToProps = (dispatch) => {
         getTasks: (sessionId) => dispatch(TasksActions.tasksRequest(sessionId)),
         getUsers: (sessionId) => dispatch(UsersActions.usersRequest(sessionId)),
         getProjects: (sessionId) => dispatch(ProjectsActions.projectsRequest(sessionId)),
-        createTimesheet: (name, date, unit_amount, task_id, user_id) =>
-            dispatch(TimesheetsActions.timesheetsAdd(name, date, unit_amount, task_id, user_id)),
-
+        openTimesheet: (task_id, user_id, startTime) =>
+            dispatch(TimesheetsActions.timesheetsOpen(task_id, user_id, startTime)),
+        closeTimesheet: (task_id, user_id, startTime, stopTime) =>
+            dispatch(TimesheetsActions.timesheetsClose(task_id, user_id, startTime, stopTime)),
     }
 }
 

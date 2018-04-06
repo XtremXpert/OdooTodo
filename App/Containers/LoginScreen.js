@@ -181,7 +181,6 @@ class LoginScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.tron.log(state)
     const { username, password } = state.login
 
     return {

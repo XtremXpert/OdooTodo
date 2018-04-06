@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import {
     Button,
@@ -14,19 +14,48 @@ import { Colors } from '../Themes/'
 export default class TaskTimer extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            startTime: null,
-            elapseTime: 0,
-            running: false
-        };
+
+        if (!props.starTime) {
+            this.state = {
+                startTime : (props.startTime ? new Date(props.startTime) : null),
+                txtTime : this.msToTime(new Date() - new Date(props.startTime))
+            };
+        }
+
     }
 
-  // // Prop type warnings
-  // static propTypes = {
-  //   someProperty: PropTypes.object,
-  //   someSetting: PropTypes.bool.isRequired,
-  // }
-  //
+
+    tick() {
+      this.setState({
+          txtTime : this.msToTime(new Date() - new Date(this.state.startTime))
+      });
+    }
+
+
+    componentWillMount() {
+        // console.tron.log('didmount')
+        // console.tron.log(this.state.startTime)
+        // if ( this.state.startTime ) {
+        //     this.taskTimer = setInterval( () => this.tick, 1000)
+        // }
+    }
+
+    componentDidMount() {
+
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.taskTimer)
+    }
+
+    // Prop type warnings
+    static propTypes = {
+        disabled: PropTypes.bool,
+        onStartTimer: PropTypes.func,
+        onStopTimer: PropTypes.func,
+        //startTime: PropTypes.string
+    }
+
   // // Defaults for props
   // static defaultProps = {
   //   someSetting: false
@@ -47,31 +76,34 @@ export default class TaskTimer extends Component {
 
     _onPressStart = () => {
         this.setState({
-            startTime : new Date(),
-            elapseTime : 0,
-            txtTime : this.msToTime( 0 ),
-            running: true,
+            startTime: new Date(),
+            txtTime: '00:00:00'
         })
-        this.taskTimer = setInterval( () => {
-            this.setState({
-                elapseTime : new Date() - this.state.startTime,
-                txtTime : this.msToTime( new Date() - this.state.startTime ),
-            })
-        }, 1000)
+
+        this.taskTimer = setInterval( () => this.tick, 1000)
+
+        this.props.onStartTimer()
     }
 
     _onPressStop = () => {
+        //this.props.onStopTimer()
         this.setState({
-            running: false
+            startTime: null
         })
         clearInterval(this.taskTimer)
+        this.props.onStopTimer()
+
+        console.tron.log(this.state)
     }
 
     render () {
-        if (!this.state.running) {
+        if (this.props.disabled) {
+            return (
+                <Text>Disabled</Text>
+            )
+        } else if (!this.state.startTime) {
             return (
                 <Button
-                    block
                     large
                     onPress={() => this._onPressStart()}
                     style={styles.buttonStyleStart}
@@ -87,7 +119,6 @@ export default class TaskTimer extends Component {
         } else {
             return (
                 <Button
-                    block
                     large
                     onPress={() => this._onPressStop()}
                     style={styles.buttonStyleStop}

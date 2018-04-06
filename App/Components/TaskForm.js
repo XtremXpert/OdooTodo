@@ -47,7 +47,7 @@ export default class TaskForm extends Component {
                 <Row style={{flex: 0}}>
                     <Col>
                         <HTML
-                            html={task.description}
+                            html={task.description || '<HTML></HTML>' }
                             style={{flex: 1}}
                         />
                     </Col>
@@ -68,7 +68,7 @@ export default class TaskForm extends Component {
                             <Label>{I18n.t('deadline')}</Label>
                             <Input
                                 disabled
-                                value={task.date_deadline}
+                                value={task.date_deadline || ''}
                             />
                         </Item>
                     </Col>
