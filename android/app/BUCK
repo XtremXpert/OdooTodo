@@ -45,12 +45,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.test01",
+    package = "com.odootodo",
 )
 
 android_resource(
     name = "res",
-    package = "com.test01",
+    package = "com.odootodo",
     res = "src/main/res",
 )
 
