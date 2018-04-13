@@ -33,25 +33,22 @@ import EntypoIcon from 'react-native-vector-icons/Entypo'
 import I18n from '../I18n';
 
 class UserScreenScreen extends React.Component {
-    static navigationOptions = {
-        title: I18n.t('userslist'),
-        headerRight: (
-            <Button
-                onPress={() => alert('This is a button!')}
-                title="Info"
-                color="#fff"
-            />)
-    }
-
-    _onPressBack = () => {
-         this.props.navigation.navigate( 'UsersScreen' );
-    }
-
-    _keyExtractor = (item, index) => item.id;
+    static navigationOptions = ({ navigation }) => {
+        const { params } = navigation.state;
+        return {
+            title: params ? params.userName : 'User need a name!',
+        }
+    };
 
     _onPressTask = (item) => {
-        this.props.setSelectedTask(item)
-        this.props.navigation.navigate('TaskScreen')
+        // this.props.setSelectedTask(item)
+        this.props.navigation.navigate(
+            'UserTaskScreen',
+            {
+                taskName: item.name,
+                taskId: item.id
+            }
+        )
     };
 
     render () {
@@ -59,7 +56,6 @@ class UserScreenScreen extends React.Component {
         const userTasks = this.props.tasks
         return (
             <Container>
-                <Text style={styles.headerText}>{user.name}</Text>
                 <Content>
                     <TaskList
                         userTasks={userTasks}
@@ -71,16 +67,23 @@ class UserScreenScreen extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
+    console.tron.log(state)
+    const { users, tasks } = state
+    const { userId } = state.login
+
+    const user = users.list.find(item => item.id === userId )
+    const userTasks =
+        tasks.list.filter( item => item.user_id[0] === userId )
+
     return {
-        user: getSelectedUser(state),
-        tasks: selectUserTasks(state)
+        user: user,
+        tasks: userTasks
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setSelectedTask: (task) => dispatch(TasksActions.setSelectedTask(task)),
     }
 }
 

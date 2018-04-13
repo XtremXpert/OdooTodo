@@ -93,7 +93,7 @@ export default class TaskTimer extends Component {
         clearInterval(this.taskTimer)
         this.props.onStopTimer()
 
-        console.tron.log(this.state)
+        //console.tron.log(this.state)
     }
 
     render () {

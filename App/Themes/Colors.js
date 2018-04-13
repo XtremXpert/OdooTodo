@@ -22,10 +22,11 @@ const colors = {
   border: '#483F53',
   banner: '#5F3E63',
   text: '#E0D7E5',
-  btnPrimary: '#0000CD',
-  btnSecondary: '#191970',
-  btnText: 'white',
-  page: '#B0C4DE'
+  primary: '#1352FE',
+  secondary: '#3884A3',
+  third: '#1352FE',
+  fourth: '#EFF8FC',
+  fifth: '#120A38',
 }
 
 export default colors

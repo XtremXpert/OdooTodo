@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 // import YourActions from '../Redux/YourRedux'
@@ -10,7 +10,9 @@ import styles from './Styles/LoadingScreenStyle'
 class LoadingScreen extends React.Component {
   render () {
     return (
-      <View style={styles.container} />
+      <View style={styles.container} >
+          <Text style={{color:'white'}}>LOADING</Text>
+      </View>
     )
   }
 }

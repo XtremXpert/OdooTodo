@@ -14,8 +14,12 @@ export default StyleSheet.create({
         marginVertical: Metrics.smallMargin,
     },
     buttonBig: {
+        backgroundColor: Colors.secondary,
         marginHorizontal: Metrics.doubleBaseMargin,
         marginVertical: Metrics.smallMargin,
     },
+    drawerContainer: {
+        backgroundColor: Colors.drawer
+    }
 
 })

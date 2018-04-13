@@ -23,11 +23,5 @@
    "deviceDetails": "Device Details",
    "noItems": "No Items",
    "search": "Search",
-   "planedhours": "Planed hours",
-   "manager": "Manager",
-   "stage": "Stage",
-   "projectslist": "Projects List",
-   "userslist": "Users List",
-   "homeScreen": "Home",
-
+   "homeScreen": "Home"
 }

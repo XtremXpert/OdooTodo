@@ -23,5 +23,18 @@ export function * login (apiOdoo, action) {
     } else {
         // dispatch failure
         yield put(LoginActions.loginFailure('Something went wrong while trying to reach Odoo Server'))
-    } 
+    }
 }
+
+// Only to test attempts to login
+// export function * login ({ username, password }) {
+//     console.tron.log('TEST')
+//     console.tron.log('password')
+//   if (password === '') {
+//     // dispatch failure
+//     yield put(LoginActions.loginFailure('WRONG'))
+//   } else {
+//     // dispatch successful logins
+//     yield put(LoginActions.loginSuccess(username))
+//   }
+// }

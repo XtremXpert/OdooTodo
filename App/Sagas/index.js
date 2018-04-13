@@ -1,6 +1,8 @@
 import { takeLatest, all } from 'redux-saga/effects'
 import Odoo from '../Services/Odoo'
-//import FixtureAPI from '../Services/FixtureApi'
+
+// import API from '../Services/Api'
+// import FixtureAPI from '../Services/FixtureApi'
 import DebugConfig from '../Config/DebugConfig'
 
 /* ------------- Types ------------- */
@@ -13,7 +15,6 @@ import { TasksTypes } from '../Redux/TasksRedux'
 import { TimesheetsTypes } from '../Redux/TimesheetsRedux'
 
 /* ------------- Sagas ------------- */
-
 import { startup } from './StartupSagas'
 import { login } from './LoginSagas'
 import { getProjects } from './ProjectsSagas'
@@ -31,7 +32,7 @@ const odoo = Odoo.create()
 /* ------------- Connect Types To Sagas ------------- */
 
 export default function * root () {
-  yield [
+  yield all([
     // some sagas only receive an action
     takeLatest(StartupTypes.STARTUP, startup),
     takeLatest(LoginTypes.LOGIN_REQUEST, login, odoo),
@@ -39,5 +40,7 @@ export default function * root () {
     takeLatest(UsersTypes.USERS_REQUEST, getUsers, odoo),
     takeLatest(TasksTypes.TASKS_REQUEST, getTasks, odoo),
     takeLatest(TimesheetsTypes.TIMESHEETS_REQUEST, getTimesheets, odoo)
-  ]
+    // some sagas receive extra parameters in addition to an action
+//    takeLatest(GithubTypes.USER_REQUEST, getUserAvatar, api)
+  ])
 }

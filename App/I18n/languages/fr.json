@@ -21,13 +21,5 @@
   "apiTesting": "API Testing",
   "themeSettings": "Réglage des thèmes",
   "deviceDetails": "Détails du périphérique",
-  "noItems": "Aucun",
-  "search": "Rechercher",
-  "planedhours": "Temps prévu",
-  "manager": "Responsable",
-  "stage": "Phase",
-  "projectslist": "Liste des projets",
-  "userslist": "Liste des usagers",
-  "homeScreen": "Accueil",
-
+  "noItems": "Aucun"
 }

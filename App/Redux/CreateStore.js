@@ -8,12 +8,12 @@ import { createReactNavigationReduxMiddleware } from 'react-navigation-redux-hel
 
 // creates the store
 export default (rootReducer, rootSaga) => {
-    /* ------------- Redux Configuration ------------- */
 
+    /* ------------- Redux Configuration ------------- */
     const middleware = []
     const enhancers = []
 
-    /* ------------- Navigation Middlewate ------------ */
+    /* ------------- Navigation Middleware ------------ */
     const navigationMiddleware = createReactNavigationReduxMiddleware(
         'root',
         state => state.nav
@@ -44,8 +44,8 @@ export default (rootReducer, rootSaga) => {
     let sagasManager = sagaMiddleware.run(rootSaga)
 
     return {
-    store,
-    sagasManager,
-    sagaMiddleware
-  }
+        store,
+        sagasManager,
+        sagaMiddleware
+    }
 }

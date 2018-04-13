@@ -2,7 +2,7 @@
   "createdWith": "2.0.0",
   "examples": "classic",
   "navigation": "react-navigation",
-  "askToOverride": true,
+  "askToOverwrite": true,
   "generators": {
     "component": "ignite-ir-boilerplate",
     "container": "ignite-ir-boilerplate",

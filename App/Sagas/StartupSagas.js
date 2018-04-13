@@ -1,21 +1,22 @@
 import { put, select } from 'redux-saga/effects'
-//import GithubActions from '../Redux/GithubRedux'
+//import GithubActions, { GithubSelectors } from '../Redux/GithubRedux'
 import AppStateActions from '../Redux/AppStateRedux'
-import { is } from 'ramda'
 import LoggedInActions, { isLoggedIn } from '../Redux/LoginRedux'
 
-// Selector
-export const selectLoggedInStatus = (state) => isLoggedIn( state.login )
+import { is } from 'ramda'
+
+// exported to make available for tests
+//export const selectAvatar = GithubSelectors.selectAvatar
+export const selectLoggedInStatus = (state) => isLoggedIn(state.login)
 
 // process STARTUP actions
 export function * startup (action) {
-    console.tron.log (this.state)
-
+    if (__DEV__ && console.tron) {
+        // straight-up string logging
+        console.tron.log('Hello, I\'m an example of how to log via Reactotron.')
+    }
     yield put(AppStateActions.setRehydrationComplete())
     const isLoggedIn = yield select(selectLoggedInStatus)
-
-    console.tron.log (isLoggedIn)
-
     if (isLoggedIn) {
         yield put(LoggedInActions.autoLogin())
     }

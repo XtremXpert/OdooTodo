@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import FloatingButton from '../Components/FloatingButton'
 
 import {
     Image } from 'react-native'
@@ -32,13 +33,17 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import I18n from '../I18n';
 
 class UsersScreen extends Component {
+    static navigationOptions = {
+      title: 'List of Users',
+    };
+
     constructor(props) {
         super(props);
         this.state = {
             activeFab: false,
         };
     }
-        
+
     _keyExtractor = (item, index) => item.id;
 
     _onPressBack = () => {
@@ -46,8 +51,14 @@ class UsersScreen extends Component {
     }
 
     _onPressItem = (item) => {
-        this.props.setSelectedUser(item.user_id[0])
-        this.props.navigation.navigate('UserScreen')
+        // this.props.setSelectedUser(item.user_id[0])
+        this.props.navigation.navigate(
+            'UserScreen',
+            {
+                userName: item.name,
+                userId: item.id,
+            }
+        )
     };
 
     render () {
@@ -56,25 +67,6 @@ class UsersScreen extends Component {
 
         return (
             <Container>
-
-                <Header>
-                    <Left style={styles.headerLeft}>
-                        <MCIcon
-                            name="menu"
-                            color={Colors.btnText}
-                            size={30}
-                            style={styles.buttonIconStyle}
-                            onPress={() => {
-                                navigate('DrawerToggle')
-                            }}/>
-                    </Left>
-                    <Body style={styles.headerBody}>
-                        <Title>Users</Title>
-                    </Body>
-                    <Right style={styles.headerRight}>
-                    </Right>
-                </Header>
-
                 <Content style={styles.container}>
                     <List dataArray={users}
                         renderRow={(item) =>
@@ -88,27 +80,7 @@ class UsersScreen extends Component {
                       }>
                     </List>
                 </Content>
-                <Fab
-                  active={this.state.activeFab}
-//                  active=false
-                  direction="up"
-                  containerStyle={{ }}
-                  style={{ backgroundColor: '#5067FF' }}
-                  position="bottomRight"
-                  // onLongPress={() =>  navigate('DrawerToggle')}
-                  // onPress={() => this.setState({ active: !this.state.active })}>
-                  onPress={() =>  navigate('DrawerToggle')} >
-                  <Icon name="share" />
-                  <Button style={{ backgroundColor: '#34A34F' }}>
-                    <Icon name="logo-whatsapp" />
-                  </Button>
-                  <Button style={{ backgroundColor: '#3B5998' }}>
-                    <Icon name="logo-facebook" />
-                  </Button>
-                  <Button disabled style={{ backgroundColor: '#DD5144' }}>
-                    <Icon name="mail" />
-                  </Button>
-                </Fab>
+                <FloatingButton navigate={navigate} />
             </Container>
 
         )

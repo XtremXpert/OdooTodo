@@ -6,18 +6,16 @@ const { Types, Creators } = createActions({
     usersRequest: ['sessionId'],
     usersSuccess: ['payload'],
     usersFailure: null,
-    setSelectedUser: ['user'],
-    clearSelectedUser: null,
 })
 
 export const UsersTypes = Types
 export default Creators
 
 /* ------------- Selectors ------------- */
-export const getSelectedUser = (state) => {
-    const { selectedUser, list } = state.users
-    return list.find(user => user.user_id[0] === selectedUser)
-}
+// export const getSelectedUser = (state) => {
+//     const { selectedUser, list } = state.users
+//     return list.find(user => user.user_id[0] === selectedUser)
+// }
 
 /* ------------- Initial State ------------- */
 export const INITIAL_STATE = Immutable({
@@ -25,19 +23,9 @@ export const INITIAL_STATE = Immutable({
     fetching: null,
     error: null,
     payload: null,
-    selectedUser: null,
 })
 
 /* ------------- Reducers ------------- */
-export const setSelectedUser = (state, { user }) => {
-    return state.merge({ selectedUser: user })
-}
-
-export const clearSelectedUser = (state) => {
-    return state.merge({ selectedUser: null })
-}
-
-
 // request the data from an api
 export const request = (state) => {
     return state.merge({
@@ -65,7 +53,4 @@ export const reducer = createReducer(INITIAL_STATE, {
     [Types.USERS_REQUEST]: request,
     [Types.USERS_SUCCESS]: success,
     [Types.USERS_FAILURE]: failure,
-    [Types.SET_SELECTED_USER]: setSelectedUser,
-    [Types.CLEAR_SELECTED_USER]: clearSelectedUser,
-
 })

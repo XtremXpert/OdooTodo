@@ -38,15 +38,13 @@ import TaskList from '../Components/TaskList'
 import TimesheetList from '../Components/TimesheetList'
 import TaskForm from '../Components/TaskForm'
 
+import FloatingMenu from '../Components/FloatingMenu'
+
+
 import { connect } from 'react-redux'
 
-import TasksActions, {
-    getSelectedTask,
-    getSelectedTaskChilds } from '../Redux/TasksRedux'
-
-import TimesheetsActions, {
-    getOpenTimesheets,
-    selectTaskTimesheets } from '../Redux/TimesheetsRedux'
+import TasksActions from '../Redux/TasksRedux'
+import TimesheetsActions from '../Redux/TimesheetsRedux'
 
 import styles from './Styles/HomeScreenStyle'
 import { Colors } from '../Themes/'
@@ -57,6 +55,13 @@ import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import I18n from '../I18n';
 
 class TaskScreen extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+        const { params } = navigation.state;
+        return {
+            title: params ? params.taskName : 'Task need a name!',
+        }
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -95,9 +100,8 @@ class TaskScreen extends React.Component {
     }
 
     render () {
-        console.tron.log(this.props)
         const { fullname,
-                setSelectedTask,
+//                setSelectedTask,
                 task,
                 timesheets,
                 childTasks,
@@ -113,29 +117,6 @@ class TaskScreen extends React.Component {
 
         return (
             <Container>
-                <Header>
-                    <Left style={styles.headerLeft}>
-                        <MCIcon
-                            name="menu"
-                            color={Colors.btnText}
-                            size={30}
-                            style={styles.buttonIconStyle}
-                            onPress={() => {
-                                goBack()
-                            }}/>
-                    </Left>
-                    <Body style={styles.headerBody}>
-                        <Title>{task.project_id[1]} - {task.name}</Title>
-                    </Body>
-                    <Right style={styles.headerRight}>
-                        <EntypoIcon
-                            name="add-to-list"
-                            color={Colors.btnText}
-                            size={30}
-                            style={styles.buttonIconStyle}
-                        />
-                    </Right>
-                </Header>
                 <Segment>
                     <Button
                         active={this.state.activeSegment === 'details'}
@@ -190,7 +171,8 @@ class TaskScreen extends React.Component {
                     <FooterTab>
                         { (openTimeSheets.length > 0  &&
                                 openTimeSheets[0].task_id[0] != task.id )
-                        ? <Text>Disabled</Text>
+                        ? <Text>Disabled should be replace by a button to
+                            close open timesheet and create a new one</Text>
                         : <TaskTimer
                             disabled={openTimeSheets.length > 0  &&
                                 openTimeSheets[0].task_id[0] != task.id}
@@ -199,53 +181,41 @@ class TaskScreen extends React.Component {
                             startTime={startTime}
                         />
                     }
-
                     </FooterTab>
                 </Footer>
-                <Fab
-                  active={this.state.activeFab}
-                  direction="up"
-                  containerStyle={{ }}
-                  style={{ backgroundColor: '#5067FF' }}
-                  position="bottomRight"
-                  onLongPress={() =>  navigate('DrawerToggle')}
-                  onPress={() => this.setState({ active: !this.state.activeFab })}>
-                  <Icon name="share" />
-                  <Button style={{ backgroundColor: '#34A34F' }}>
-                    <Icon name="logo-whatsapp" />
-                  </Button>
-                  <Button style={{ backgroundColor: '#3B5998' }}>
-                    <Icon name="logo-facebook" />
-                  </Button>
-                  <Button disabled style={{ backgroundColor: '#DD5144' }}>
-                    <Icon name="mail" />
-                  </Button>
-                </Fab>
+                <FloatingMenu navigate={navigate}>
+                </FloatingMenu>
             </Container>
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    console.tron.log(state)
-    const { sessionId } = state.login
+const mapStateToProps = (state, props) => {
+    const { tasks, timesheets } = state
+    const { sessionId, user_id } = state.login
+    const { taskId } = props.navigation.state.params
+
+    const task = tasks.list.find( item => item.id === taskId )
+    const childTasks = tasks.list.filter(
+        task => task.child_ids.indexOf(taskId) >=0 )
+    const taskTimesheets = timesheets.list.filter(
+        timesheet => timesheet.task_id[0] === taskId)
+    const openTimeSheets = timesheets.list.filter(
+        timesheet => (timesheet.write_date == null  &&
+            timesheet.stopTime == null))
+
     return {
-        task: getSelectedTask(state),
-        childTasks: getSelectedTaskChilds(state),
-        timesheets: selectTaskTimesheets(state),
+        task: task,
+        childTasks: childTasks,
+        timesheets: taskTimesheets,
         sessionId: sessionId,
-        openTimeSheets: getOpenTimesheets(state)
+        openTimeSheets: openTimeSheets
 //        username: state.login.
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setSelectedTask: (task) => dispatch(TasksActions.setSelectedTask(task)),
-        logout: () => dispatch(LoginActions.logout()),
-        getTasks: (sessionId) => dispatch(TasksActions.tasksRequest(sessionId)),
-        getUsers: (sessionId) => dispatch(UsersActions.usersRequest(sessionId)),
-        getProjects: (sessionId) => dispatch(ProjectsActions.projectsRequest(sessionId)),
         openTimesheet: (task_id, user_id, startTime) =>
             dispatch(TimesheetsActions.timesheetsOpen(task_id, user_id, startTime)),
         closeTimesheet: (task_id, user_id, startTime, stopTime) =>

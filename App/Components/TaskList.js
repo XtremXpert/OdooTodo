@@ -44,7 +44,7 @@ export default class TaskList extends Component {
                 <List dataArray={this.props.userTasks}
                     renderRow={(item) =>
                         <ListItem
-                            onPress={() => this.props.onTaskSelect(item.id)}
+                            onPress={() => this.props.onTaskSelect(item)}
                             style={styles.listItem} >
                             <Body>
                                 <Title style={styles.title}>

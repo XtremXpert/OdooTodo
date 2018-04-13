@@ -1,25 +1,13 @@
 import React from 'react'
 
 import {
-    Body,
     Container,
-    Header,
-    Left,
-    Fab,
-    Icon,
-    Content,
-    Title,
-    Right,
-    Button,
-    Text } from 'native-base';
+    Content } from 'native-base';
 
 import TaskList from '../Components/TaskList'
-
-import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import FloatingButton from '../Components/FloatingButton'
 
 import { connect } from 'react-redux'
-
-import TasksActions, { selectLoggedUserTasks } from '../Redux/TasksRedux'
 
 import styles from './Styles/HomeScreenStyle'
 import { Colors } from '../Themes/'
@@ -27,20 +15,29 @@ import { Colors } from '../Themes/'
 import I18n from '../I18n';
 
 class HomeScreen extends React.Component {
+    static navigationOptions = ({ navigation }) => {
+// TODO find a way to put username in the header
+//        const { params } = navigation.state;
+        return {
+            title: I18n.t('homeScreen'),
+        }
+    };
+
     constructor(props) {
         super(props);
         this.state = {
             activeFab: false,
         };
     }
-    static navigationOptions = {
-        title: I18n.t('homeScreen'),
-        drawerLabel: 'Home',
-    };
 
-    _selectTask = (item) => {
-        this.props.setSelectedTask(item)
-        this.props.navigation.navigate('TaskScreen')
+    _onPressTask = (item) => {
+        this.props.navigation.navigate(
+            'HomeTaskScreen',
+            {
+                taskName: item.name,
+                taskId: item.id
+            }
+        )
     };
 
     render () {
@@ -48,65 +45,34 @@ class HomeScreen extends React.Component {
         const { navigate } = this.props.navigation
         return (
             <Container>
-                <Header>
-                    <Left style={styles.headerLeft}>
-                        <MCIcon
-                            name="menu"
-                            color={Colors.btnText}
-                            size={30}
-                            style={styles.buttonIconStyle}
-                            onPress={() => {
-                                navigate('DrawerToggle')
-                            }}/>
-                    </Left>
-                    <Body style={styles.headerBody}>
-                        <Title>Accueil</Title>
-                    </Body>
-                    <Right style={styles.headerRight} />
-                </Header>
                 <Content>
                     <TaskList
                         userTasks={tasks}
-                        onTaskSelect={this._selectTask}
+                        onTaskSelect={this._onPressTask}
                     />
                 </Content>
-                <Fab
-                  active={this.state.activeFab}
-//                  active=false
-                  direction="up"
-                  containerStyle={{ }}
-                  style={{ backgroundColor: '#5067FF' }}
-                  position="bottomRight"
-                  // onLongPress={() =>  navigate('DrawerToggle')}
-                  // onPress={() => this.setState({ active: !this.state.active })}>
-                  onPress={() =>  navigate('DrawerToggle')} >
-                  <Icon name="share" />
-                  <Button style={{ backgroundColor: '#34A34F' }}>
-                    <Icon name="logo-whatsapp" />
-                  </Button>
-                  <Button style={{ backgroundColor: '#3B5998' }}>
-                    <Icon name="logo-facebook" />
-                  </Button>
-                  <Button disabled style={{ backgroundColor: '#DD5144' }}>
-                    <Icon name="mail" />
-                  </Button>
-                </Fab>
+                <FloatingButton navigate={navigate} />
             </Container>
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    const { fetching, sessionId, fullname } = state.login
+    const { sessionId, userId } = state.login
+    const { tasks, users } = state
+
+    const user = users.list.find(item => item.id === userId)
+    const userTasks = tasks.list.filter(item => item.user_id[0] === userId)
+
     return {
-        tasks: selectLoggedUserTasks(state),
-        sessionId: sessionId
+        tasks: userTasks,
+        user,
+        sessionId
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setSelectedTask: (task) => dispatch(TasksActions.setSelectedTask(task)),
     }
 }
 
