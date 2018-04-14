@@ -4498,8 +4498,9 @@ ignite-i18n@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ignite-i18n/-/ignite-i18n-1.1.1.tgz#d6dade3f9209bc7457de61c7425fa26ec9e67b3e"
 
-"ignite-ir-boilerplate@file:../../ignite/ignite-ir-boilerplate":
+ignite-ir-boilerplate@2.3.1:
   version "2.3.1"
+  resolved "https://registry.yarnpkg.com/ignite-ir-boilerplate/-/ignite-ir-boilerplate-2.3.1.tgz#b5870b487e339e2d81980a2d3a0e958eae9e4ff8"
   dependencies:
     ramda "^0.23.0"
 
