@@ -62,7 +62,7 @@
     "enzyme-adapter-react-16": "^1.1.0",
     "husky": "^0.14.3",
     "ignite-i18n": "^1.1.1",
-    "ignite-ir-boilerplate": "file:/home/benoit/ignite/ignite-ir-boilerplate",
+    "ignite-ir-boilerplate": "^2.3.1",
     "ignite-redux-persist": "^1.1.0",
     "ignite-standard": "^1.0.0",
     "ignite-vector-icons": "^1.1.0",

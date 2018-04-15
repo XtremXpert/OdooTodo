@@ -2,7 +2,7 @@
 import apisauce from 'apisauce'
 // our "constructor"
 //const create = ( baseURL = 'http://192.168.234.124:8069/' ) => {
-const create = ( baseURL = 'http://demo-projet.xtremxpert.com/' ) => {
+const create = ( baseURL = 'https://demo-projet.xtremxpert.com/' ) => {
 
     const odoo = apisauce.create({
         // base URL is read from the "constructor"

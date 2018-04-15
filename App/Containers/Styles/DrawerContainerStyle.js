@@ -19,6 +19,7 @@ export default StyleSheet.create({
         marginVertical: Metrics.smallMargin,
     },
     drawerContainer: {
+        paddingTop: 120,
         backgroundColor: Colors.drawer
     }
 
