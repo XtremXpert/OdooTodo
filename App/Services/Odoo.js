@@ -16,6 +16,8 @@ const create = ( baseURL = 'https://demo-projet.xtremxpert.com/' ) => {
         timeout: 10000
     })
 
+    odoo.axiosInstance.defaults.withCredentials = true;
+
     //
     // Low Level fonction (basic api)
     //

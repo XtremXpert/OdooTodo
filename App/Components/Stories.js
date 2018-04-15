@@ -1,4 +1,5 @@
 import './AlertMessage.story'
 import './DrawerButton.story'
 import './FullButton.story'
+import './FloatingButton.story'
 import './RoundedButton.story'
