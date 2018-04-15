@@ -1,5 +1,5 @@
 import color from "color";
-
+import { Colors } from "../../Themes"
 import { Platform, Dimensions, PixelRatio } from "react-native";
 
 const deviceHeight = Dimensions.get("window").height;
@@ -198,12 +198,12 @@ export default {
   },
 
   // Segment
-  segmentBackgroundColor: "#3F51B5",
-  segmentActiveBackgroundColor: "#fff",
-  segmentTextColor: "#fff",
-  segmentActiveTextColor: "#3F51B5",
-  segmentBorderColor: "#fff",
-  segmentBorderColorMain: "#3F51B5",
+  segmentBackgroundColor: Colors.secondary,
+  segmentActiveBackgroundColor: Colors.fourth,
+  segmentTextColor: Colors.fourth,
+  segmentActiveTextColor: Colors.secondary,
+  segmentBorderColor: Colors.fourth,
+  segmentBorderColorMain: Colors.secondary,
 
   // Spinner
   defaultSpinnerColor: "#45D56E",

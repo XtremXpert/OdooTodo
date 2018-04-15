@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
-import { View, StatusBar } from 'react-native'
+import { StatusBar } from 'react-native'
 import ReduxNavigation from '../Navigation/ReduxNavigation'
 import { connect } from 'react-redux'
 import StartupActions from '../Redux/StartupRedux'
 import ReduxPersist from '../Config/ReduxPersist'
 
+// Here we gonna include the native base theme localy to change it
+import { View, StyleProvider } from 'native-base';
+import getTheme from '../native-base-theme/components';
+import material from '../native-base-theme/variables/material';
 // Styles
 import styles from './Styles/RootContainerStyles'
 
@@ -18,10 +22,12 @@ class RootContainer extends Component {
 
   render () {
     return (
-      <View style={styles.applicationView}>
-        <StatusBar barStyle='light-content' />
-        <ReduxNavigation />
-      </View>
+        <StyleProvider style={getTheme(material)}>
+            <View style={styles.applicationView}>
+                <StatusBar barStyle='light-content' />
+                <ReduxNavigation />
+            </View>
+        </StyleProvider>
     )
   }
 }
