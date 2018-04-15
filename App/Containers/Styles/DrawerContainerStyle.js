@@ -20,7 +20,7 @@ export default StyleSheet.create({
     },
     drawerContainer: {
         paddingTop: 120,
-        backgroundColor: Colors.drawer
+        backgroundColor: Colors.cloud
     }
 
 })
