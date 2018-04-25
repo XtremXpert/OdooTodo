@@ -3,7 +3,7 @@ import React from 'react'
 import { StackNavigator } from 'react-navigation'
 
 import ProjectScreen from '../Containers/ProjectScreen'
-import ProjectsScreen from '../Containers/ProjectsScreen'
+import ProjectsListScreen from '../Containers/ProjectsListScreen'
 import TaskScreen from '../Containers/TaskScreen'
 
 import styles from './Styles/NavigationStyles'
@@ -13,8 +13,8 @@ import { Button } from 'native-base';
 
 const ProjectsStackNavigator=StackNavigator(
     {
-        ProjectsScreen: {
-            screen: ProjectsScreen,
+        ProjectsListScreen: {
+            screen: ProjectsListScreen,
             navigationOptions: {
                 headerRight: (
                     <Button
@@ -41,7 +41,7 @@ const ProjectsStackNavigator=StackNavigator(
     }, {
         // Default config for all screens
         // headerMode: 'none',
-        initialRouteName: 'ProjectsScreen',
+        initialRouteName: 'ProjectsListScreen',
         navigationOptions: {
             headerStyle: styles.header,
             headerTintColor: Colors.fourth

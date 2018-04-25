@@ -45,6 +45,8 @@ class LoginScreen extends React.Component {
         this.state = {
             username: props.username,
             password: props.password,
+            databaseName: props.databaseName,
+            baseURL: props.baseURL,
             visibleHeight: Metrics.screenHeight,
             topLogo: {width: Metrics.screenWidth -  Metrics.doubleBaseMargin}
         }
@@ -91,10 +93,10 @@ class LoginScreen extends React.Component {
     }
 
     handlePressLogin = () => {
-        const { username, password } = this.state
+        const { username, password, databaseName, baseURL } = this.state
         this.isAttempting = true
         // attempt a login - a saga is listening to pick it up from here.
-        this.props.attemptLogin(username, password)
+        this.props.attemptLogin(username, password, databaseName, baseURL)
     }
 
     handleChangeUsername = (text) => {
@@ -105,8 +107,16 @@ class LoginScreen extends React.Component {
         this.setState({ password: text })
     }
 
+    handleChangeDatabaseName = (text) => {
+        this.setState({ databaseName: text })
+    }
+
+    handleChangeBaseURL = (text) => {
+        this.setState({ baseURL: text })
+    }
+
     render () {
-        const { username, password } = this.state
+        const { username, password, databaseName, baseURL } = this.state
         const { fetching } = this.props
         const editable = !fetching
         const textInputStyle = editable ? styles.textInput : styles.textInputReadonly
@@ -116,6 +126,42 @@ class LoginScreen extends React.Component {
                     <Image source={Images.logo} style={[styles.topLogo, this.state.topLogo]} />
                 </View>
                 <View style={styles.form}>
+
+                    <View style={styles.row}>
+                        <Text style={styles.rowLabel}>{I18n.t('baseURL')}</Text>
+                        <TextInput
+                            ref='baseURL'
+                            style={textInputStyle}
+                            value={baseURL}
+                            editable={editable}
+                            keyboardType='default'
+                            returnKeyType='next'
+                            autoCapitalize='none'
+                            autoCorrect={false}
+                            onChangeText={this.handleChangeBaseURL}
+                            underlineColorAndroid='transparent'
+                            onSubmitEditing={() => this.refs.databaseName.focus()}
+                            // placeholder={I18n.t('baseURL')}
+                        />
+                    </View>
+
+                    <View style={styles.row}>
+                        <Text style={styles.rowLabel}>{I18n.t('databaseName')}</Text>
+                        <TextInput
+                            ref='databaseName'
+                            style={textInputStyle}
+                            value={databaseName}
+                            editable={editable}
+                            keyboardType='default'
+                            returnKeyType='next'
+                            autoCapitalize='none'
+                            autoCorrect={false}
+                            onChangeText={this.handleChangeDatabaseName}
+                            underlineColorAndroid='transparent'
+                            onSubmitEditing={() => this.refs.username.focus()}
+                            placeholder={I18n.t('databaseName')} />
+                    </View>
+
                     <View style={styles.row}>
                         <Text style={styles.rowLabel}>{I18n.t('username')}</Text>
                         <TextInput
@@ -181,16 +227,21 @@ class LoginScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { username, password } = state.login
+    console.tron.log(state)
+    const { username, password, baseURL, databaseName, fetching } = state.login
 
     return {
-        fetching: state.login.fetching
+        fetching: fetching,
+        username: username,
+        password: password,
+        baseURL: baseURL,
+        databaseName: databaseName
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        attemptLogin: (username, password) => dispatch(LoginActions.loginRequest(username, password))
+        attemptLogin: (username, password, databaseName, baseURL) => dispatch(LoginActions.loginRequest(username, password, databaseName, baseURL))
     }
 }
 

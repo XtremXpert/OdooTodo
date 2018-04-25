@@ -9,7 +9,7 @@ export default StyleSheet.create({
         borderRadius: 4
     },
     row: {
-        paddingVertical: Metrics.doubleBaseMargin,
+        paddingVertical: Metrics.simpleBaseMargin,
         paddingHorizontal: Metrics.doubleBaseMargin
     },
     rowLabel: {

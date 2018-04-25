@@ -5,7 +5,12 @@ export function * getProjects (apiOdoo, action) {
     const { sessionId } = action
     // make the call to the api
 
-    const response = yield call(apiOdoo.getProjects, sessionId)
+    //const response = yield call(apiOdoo.getProjects, sessionId)
+    const response = yield call(apiOdoo.search_read,
+        'project.project', {
+            domain: [ [ 'active', '=', true ] ],
+            // fields: fields
+        })
 
     // success?
     if (response.ok) {

@@ -13,8 +13,9 @@ export const reducers = combineReducers({
     users: require('./UsersRedux').reducer,
     projects: require('./ProjectsRedux').reducer,
     timesheets: require('./TimesheetsRedux').reducer,
-//  github: require('./GithubRedux').reducer,
-//  search: require('./SearchRedux').reducer
+    partners: require('./PartnersRedux').reducer,
+    messages: require('./MessagesRedux').reducer,
+    attachments: require('./AttachmentsRedux').reducer,
 })
 
 export default () => {

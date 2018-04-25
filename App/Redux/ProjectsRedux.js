@@ -26,7 +26,6 @@ export const INITIAL_STATE = Immutable({
 
 /* ------------- Selectors ------------- */
 // export const getSelectedProject = (state) => {
-//     console.tron.log(state)
 //     const selectedProject = state.projects.selectedProject
 //     const projectsList = state.projects.list
 //     return projectsList.find(project => project.id === selectedProject)
@@ -46,7 +45,7 @@ export const INITIAL_STATE = Immutable({
 //     return state.merge({ selectedProject: null })
 // }
 
-export const request = (state) => {
+export const request = (state ) => {
     return state.merge({
         fetching: true,
         payload: null

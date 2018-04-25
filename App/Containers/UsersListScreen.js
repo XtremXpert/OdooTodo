@@ -25,14 +25,14 @@ import { connect } from 'react-redux'
 import UsersActions from '../Redux/UsersRedux'
 
 // Styles
-import styles from './Styles/UsersScreenStyle'
+import styles from './Styles/UsersListScreenStyle'
 import { Colors } from '../Themes/'
 import EntypoIcon from 'react-native-vector-icons/Entypo'
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import I18n from '../I18n';
 
-class UsersScreen extends Component {
+class UsersListScreen extends Component {
     static navigationOptions = {
       title: 'List of Users',
     };
@@ -70,19 +70,21 @@ class UsersScreen extends Component {
                 <Content style={styles.container}>
                     <List dataArray={users}
                         renderRow={(item) =>
-                          <ListItem onPress={() => this._onPressItem(item)} >
-                              <Thumbnail
-                                  şmall
-                                  source={{uri: `data:image/png;base64,${item.image_small}`}}
-                              />
-                              <Text>{item.name} - {item.email}</Text>
-                          </ListItem>
-                      }>
+                        <ListItem onPress={() => this._onPressItem(item)} >
+                            <Thumbnail
+                                şmall
+                                source={{uri: `data:image/png;base64,
+                                    ${item.image_small}`}}
+                            />
+                            <Body>
+                                <Text>{item.name} - {item.email}</Text>
+                            </Body>
+                        </ListItem>
+                        }>
                     </List>
                 </Content>
                 <FloatingButton navigate={navigate} />
             </Container>
-
         )
     }
 }
@@ -102,4 +104,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(UsersListScreen)

@@ -3,13 +3,15 @@ import LoginActions from '../Redux/LoginRedux'
 
 // attempts to login
 export function * login (apiOdoo, action) {
-    const { username, password } = action
-
+    const { username, password, databaseName, baseURL  } = action
+    console.tron.log(databaseName)
     apiOdoo.username = username
     apiOdoo.password = password
-    apiOdoo.database = 'demo-projet'
+    apiOdoo.database = databaseName
+    console.tron.log(apiOdoo)
+//    apiOdoo.axiosInstance.setBaseURI(baseURL)
 
-    const response = yield call(apiOdoo.login,username, password,'demo-projet')
+    const response = yield call(apiOdoo.login, username, password, databaseName)
     if (response.ok) {
 
         if (response.data.error) {
@@ -28,8 +30,6 @@ export function * login (apiOdoo, action) {
 
 // Only to test attempts to login
 // export function * login ({ username, password }) {
-//     console.tron.log('TEST')
-//     console.tron.log('password')
 //   if (password === '') {
 //     // dispatch failure
 //     yield put(LoginActions.loginFailure('WRONG'))

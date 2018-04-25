@@ -2,8 +2,8 @@
 import apisauce from 'apisauce'
 // our "constructor"
 //const create = ( baseURL = 'http://192.168.234.124:8069/' ) => {
-const create = ( baseURL = 'https://demo-projet.xtremxpert.com/' ) => {
 
+const create = ( baseURL = 'https://demo-projet.xtremxpert.com/' ) => {
     const odoo = apisauce.create({
         // base URL is read from the "constructor"
         baseURL,
@@ -23,14 +23,17 @@ const create = ( baseURL = 'https://demo-projet.xtremxpert.com/' ) => {
     //
 
     // Login function == Return function generate loginSucces action from saga
-    const login = (username, password, dbname) => {
+    const login = (username, password, dbname, baseUrl) => {
         const url = 'web/session/authenticate'
+
         const params = {
             db: dbname,
             login: username,
             password: password
         }
         const json = JSON.stringify({ params: params });
+        console.tron.log(odoo)
+//        odoo.setBaseURL(baseUrl)
         return odoo.post(url, json )
     }
 
@@ -102,10 +105,13 @@ const create = ( baseURL = 'https://demo-projet.xtremxpert.com/' ) => {
 
   // Basic Get
     const get = (model, paramsIn) => {
+        console.tron.log('param')
+        console.tron.log(paramsIn)
+        console.tron.log(model)
+
         const url = 'web/dataset/call_kw'
 
         const params = {
-            kwargs: {
                 model,
                 method: 'read',
                 args: [
@@ -115,102 +121,26 @@ const create = ( baseURL = 'https://demo-projet.xtremxpert.com/' ) => {
                     fields: paramsIn.fields,
                 },
             }
-        }
+
+        console.tron.log(params)
+
         const json = JSON.stringify(
             {jsonrpc: '2.0',
             id: new Date().getUTCMilliseconds(),
             method: 'call',
             params});
+
+
+        console.tron.log(json)
         return odoo.post(url, json )
     }
-    // Now we gonna use those low lev api function and
-    // build the real transaction with odoo and their
-    // response handler can be link by saga to reducer
 
-    // Projects
-    const getProjects = ( sessionId ) => {
-        odoo.setHeader('Cookie': sessionId)
-        return search_read('project.project', {
-            domain: [ [ 'active', '=', true ] ],
-//          fields: ['name','id','project_id']
-        })
 
+    return {
+        get,
+        search_read,
+        login,
     }
-
-    // TimeSheet
-    // In fact timesheet in Odoo are store in account.analytic.line
-    // Those account.analytic.line stock many other information related
-    // analytic account so we need to extract only those related to
-    // returned Project so we need to pass the list of project (id)
-    const getTimesheets = ( sessionId, projectIds) => {
-        odoo.setHeader('Cookie': sessionId)
-        return search_read('account.analytic.line', {
-            domain: [ [ 'project_id', 'in', projectIds ] ],
-//          fields: ['name','id','project_id']
-        })
-
-    }
-
-//     // getProjectTasks
-//     const getProjectTasks = ( projectId , sessionId ) => {
-//         odoo.setHeader('Cookie': sessionId)
-//         return search_read('project.task', {
-//             domain: [ [ 'project_id', '=', projectId ] ],
-// //          fields: ['name','id','project_id']
-//         })
-//     }
-
-    // getUsers
-    const getUsers = ( sessionId ) => {
-        odoo.setHeader('Cookie': sessionId)
-        return search_read('hr.employee', {
-            domain: [ [ 'user_id', '!=', false ] ],
-//          fields: ['name','id','project_id']
-        })
-
-    }
-
-//     // getUserTasks
-//     const getUserTasks = ( userId , sessionId ) => {
-//         odoo.setHeader('Cookie': sessionId)
-//         return search_read('project.task', {
-//             domain: [ [ 'user_id', '=', userId ] ],
-// //          fields: ['name','id','project_id']
-//         })
-//
-//     }
-
-    // getUserTasks
-    const getTasks = ( sessionId ) => {
-        odoo.setHeader('Cookie': sessionId)
-        return search_read('project.task', {
-            domain: [ [ 'active', '!=', false ] ],
-//          fields: ['name','id','project_id']
-        })
-
-    }
-
-    const createTimesheet = ( sessionId, name, date, unit_amount, task_id, user_id ) => {
-        odoo.setHeader('Cookie': sessionId)
-        return create('account.analytic.line', {
-            name: 'test',
-            date: date,
-            unit_amount: unit_amout,
-            task_id: task_id,
-            user_id:user_id,
-//          fields: ['name','id','project_id']
-        })
-    }
-
-
-  return {
-    login,
-    getUsers,
-    getTasks,
-    getProjects,
-    getTimesheets,
-    createTimesheet
-  }
 }
 
 // let's return back our create method as the default.

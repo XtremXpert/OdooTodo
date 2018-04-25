@@ -13,12 +13,12 @@ import ProjectsActions from '../Redux/ProjectsRedux'
 import { connect } from 'react-redux'
 
 // Styles
-import styles from './Styles/ProjectsScreenStyle'
+import styles from './Styles/ProjectsListScreenStyle'
 import { Colors } from '../Themes/'
 
 import I18n from '../I18n';
 
-class ProjectsScreen extends Component {
+class ProjectsListScreen extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params } = navigation.state;
         return {
@@ -88,4 +88,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProjectsScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectsListScreen)

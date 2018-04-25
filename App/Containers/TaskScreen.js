@@ -1,30 +1,14 @@
 import React from 'react'
 
 import {
-    Body,
     Button,
-    Card,
     Container,
     Content,
-    Fab,
     Footer,
     FooterTab,
-    Form,
-    Header,
     H1,
-    H2,
-    H3,
-    Icon,
-    Input,
-    Item,
-    Label,
-    Left,
-    List,
-    ListItem,
-    Right,
     Segment,
-    Text,
-    Title } from 'native-base';
+    Text } from 'native-base';
 
 import HTML from 'react-native-render-html';
 
@@ -196,13 +180,16 @@ const mapStateToProps = (state, props) => {
     const { taskId } = props.navigation.state.params
 
     const task = tasks.list.find( item => item.id === taskId )
+
     const childTasks = tasks.list.filter(
         task => task.child_ids.indexOf(taskId) >=0 )
+
     const taskTimesheets = timesheets.list.filter(
         timesheet => timesheet.task_id[0] === taskId)
+
     const openTimeSheets = timesheets.list.filter(
         timesheet => (timesheet.write_date == null  &&
-            timesheet.stopTime == null))
+        timesheet.stopTime == null))
 
     return {
         task: task,

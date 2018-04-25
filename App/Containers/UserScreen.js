@@ -68,7 +68,6 @@ class UserScreenScreen extends React.Component {
 }
 
 const mapStateToProps = (state, props) => {
-    console.tron.log(state)
     const { users, tasks } = state
     const { userId } = state.login
 

@@ -3,7 +3,7 @@ import React from 'react'
 import { StackNavigator } from 'react-navigation'
 
 import UserScreen from '../Containers/UserScreen'
-import UsersScreen from '../Containers/UsersScreen'
+import UsersListScreen from '../Containers/UsersListScreen'
 import TaskScreen from '../Containers/TaskScreen'
 
 import styles from './Styles/NavigationStyles'
@@ -33,8 +33,8 @@ const UsersStackNavigator=StackNavigator(
                     />)
             }
         },
-        UsersScreen: {
-            screen: UsersScreen,
+        UsersListScreen: {
+            screen: UsersListScreen,
             navigationOptions: {
                 title: 'User',
                 headerRight: (
@@ -48,7 +48,7 @@ const UsersStackNavigator=StackNavigator(
     }, {
         // Default config for all screens
         // headerMode: 'none',
-        initialRouteName: 'UsersScreen',
+        initialRouteName: 'UsersListScreen',
         navigationOptions: {
             headerStyle: styles.header,
             headerTintColor: Colors.fourth

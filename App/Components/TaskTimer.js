@@ -33,8 +33,7 @@ export default class TaskTimer extends Component {
 
 
     componentWillMount() {
-        // console.tron.log('didmount')
-        // console.tron.log(this.state.startTime)
+
         // if ( this.state.startTime ) {
         //     this.taskTimer = setInterval( () => this.tick, 1000)
         // }
@@ -92,8 +91,6 @@ export default class TaskTimer extends Component {
         })
         clearInterval(this.taskTimer)
         this.props.onStopTimer()
-
-        //console.tron.log(this.state)
     }
 
     render () {

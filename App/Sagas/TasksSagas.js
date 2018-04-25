@@ -4,7 +4,13 @@ import TasksActions from '../Redux/TasksRedux'
 export function * getTasks (apiOdoo, action) {
     const { sessionId } = action
     // make the call to the api
-    const response = yield call(apiOdoo.getTasks, sessionId)
+    //const response = yield call(apiOdoo.getTasks, sessionId)
+
+    const response = yield call(apiOdoo.search_read,
+        'project.task', {
+            domain: [ [ 'active', '=', true ] ],
+            // fields: fields
+        })
 
     // success?
     if (response.ok) {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Text, Animated, Easing } from 'react-native'
 import { StackNavigator, DrawerNavigator } from 'react-navigation'
+
 import DrawerContainer from '../Containers/DrawerContainer'
 import LoadingScreen from '../Containers/LoadingScreen'
 
@@ -8,6 +9,8 @@ import NotLoggedInStackNavigator from './NotLoggedInStackNavigator'
 import HomeStackNavigator from './HomeStackNavigator'
 import ProjectsStackNavigator from './ProjectsStackNavigator'
 import UsersStackNavigator from './UsersStackNavigator'
+import PartnersStackNavigator from './PartnersStackNavigator'
+import DebugStackNavigator from './DebugStackNavigator'
 
 import styles from './Styles/NavigationStyles'
 import { Colors } from '../Themes/'
@@ -30,6 +33,13 @@ const DrawerStack = DrawerNavigator(
         },
         Users: {
             screen: UsersStackNavigator
+        },
+        Partners: {
+            screen: PartnersStackNavigator
+        },
+        DebugScreen: {
+            screen: DebugStackNavigator,
+
         },
     }, {
         gesturesEnabled: false,

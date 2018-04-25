@@ -4,7 +4,7 @@ import Immutable from 'seamless-immutable'
 /* ------------- Types and Action Creators ------------- */
 
 const { Types, Creators } = createActions({
-    loginRequest: ['username', 'password'],
+    loginRequest: ['username', 'password', 'databaseName', 'baseURL' ],
     loginSuccess: ['loginResponse'],
     loginFailure: ['error'],
     logout: null,
@@ -17,6 +17,8 @@ export default Creators
 /* ------------- Initial State ------------- */
 
 export const INITIAL_STATE = Immutable({
+    baseURL : 'https://demo-projet.xtremxpert.com/',
+    databaseName : 'demo-projet',
     fetching: false,
     error: null,
     company_id: null,
